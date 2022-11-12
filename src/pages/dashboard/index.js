@@ -17,4 +17,8 @@ export const dashboardPagesConfigs = [
     path: '/dashboard/courses',
     component: React.lazy(() => import('./courses')),
   },
+  {
+    path: '/dashboard/components',
+    component: React.lazy(() => import('./Components/forRoute')),
+  },
 ];

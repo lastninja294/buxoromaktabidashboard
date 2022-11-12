@@ -3,6 +3,7 @@ import {GiTeacher} from 'react-icons/gi';
 import {MdOutlinePlayLesson, MdOutlineManageAccounts} from 'react-icons/md';
 import {IoNewspaperOutline} from 'react-icons/io5';
 import {AiOutlineLineChart} from 'react-icons/ai';
+import {VscTools} from 'react-icons/vsc';
 
 const routesConfig = [
   {
@@ -41,7 +42,15 @@ const routesConfig = [
         messageId: 'sidebar.dashboard.news',
         type: 'item',
         icon: <IoNewspaperOutline />,
-        path: '/dashboard/results',
+        path: '/dashboard/news',
+      },
+      {
+        id: 'components',
+        title: 'Components',
+        messageId: 'sidebar.dashboard.components',
+        type: 'item',
+        icon: <VscTools />,
+        path: '/dashboard/components',
       },
     ],
   },

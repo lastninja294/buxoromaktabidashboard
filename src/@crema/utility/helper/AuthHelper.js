@@ -1,4 +1,5 @@
 import {authRole} from '../../../shared/constants/AppEnums';
+import image from '../../../assets/avatar/A11.png';
 
 export const getUserFromAuth0 = (user) => {
   if (user)
@@ -18,9 +19,9 @@ export const getUserFromFirebase = (user) => {
     return {
       id: 1,
       uid: user.uid,
-      displayName: user.displayName ? user.displayName : 'Crema User',
+      displayName: user.displayName ? user.displayName : 'Bekorchi',
       email: user.email,
-      photoURL: user.photoURL ? user.photoURL : '/assets/images/avatar/A11.jpg',
+      photoURL: user.photoURL ? user.photoURL : image.toString(),
       role: authRole.user,
     };
   return user;

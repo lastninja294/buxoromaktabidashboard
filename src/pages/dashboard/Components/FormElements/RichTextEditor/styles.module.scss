@@ -1,4 +1,11 @@
 .editor {
   background-color: white;
   padding: 0 12px;
+  min-height: 240px;
+  max-height: 320px;
+  overflow: auto;
+}
+
+.rdw-image-modal-upload-option-label {
+  display: none;
 }

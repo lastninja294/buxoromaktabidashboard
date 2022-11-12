@@ -22,7 +22,7 @@ const ChangePassword = () => {
         <IntlMessages id='userProfile.changePassword' />
       </h3>
       <AppRowContainer gutter={16}>
-        <Col xs={24} md={12}>
+        <Col xs={24} md={16}>
           <Form.Item
             name='oldPassword'
             rules={[
@@ -31,8 +31,8 @@ const ChangePassword = () => {
             <Input.Password placeholder='Enter password' />
           </Form.Item>
         </Col>
-        <Col xs={24} md={12} />
-        <Col xs={24} md={12}>
+        <Col xs={24} md={16} />
+        <Col xs={24} md={16}>
           <Form.Item
             name='password'
             rules={[
@@ -41,7 +41,7 @@ const ChangePassword = () => {
             <Input.Password placeholder='Enter new password' />
           </Form.Item>
         </Col>
-        <Col xs={24} md={12}>
+        <Col xs={24} md={16}>
           <Form.Item
             name='confirmPassword'
             rules={[

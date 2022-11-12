@@ -1,9 +1,9 @@
 import React from 'react';
 import {Editor} from 'react-draft-wysiwyg';
-import {EditorState, convertToRaw} from 'draft-js';
+import {EditorState} from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import draftToHtml from 'draftjs-to-html';
-import DraftDefaultConfig from './config';
+// import draftToHtml from 'draftjs-to-html';
+// import DraftDefaultConfig from './config';
 import styles from './styles.module.scss';
 import image from './image.png';
 
@@ -12,11 +12,10 @@ export default () => {
     EditorState.createEmpty(),
   );
 
-//   console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+  //   console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())));
 
-    function uploadImageCallBack(file) {
-      
-        // Xullas Api tayyor bo'ganda mashetda rasmni post qivoraman tamom shu bilan
+  function uploadImageCallBack(file) {
+    // Xullas Api tayyor bo'ganda mashetda rasmni post qivoraman tamom shu bilan
     console.log(file);
     return new Promise((resolve, reject) => {
       const a = true;
@@ -34,17 +33,58 @@ export default () => {
   return (
     <div>
       <Editor
-        {...DraftDefaultConfig}
         toolbarOnHidden
         editorState={editorState}
-        toolbarClassName='toolbarClassName'
-        wrapperClassName='wrapperClassName'
         editorClassName={styles.editor}
         onEditorStateChange={setEditorState}
+        editorStyle={{maxHeight: '320px'}}
         toolbar={{
+          options: [
+            'inline',
+            'blockType',
+            'fontSize',
+            'fontFamily',
+            'list',
+            'textAlign',
+            'image',
+            'history',
+          ],
+          inline: {
+            inDropdown: false,
+            options: [
+              'bold',
+              'italic',
+              'underline',
+              'strikethrough',
+              'superscript',
+              'subscript',
+            ],
+          },
+          blockType: {
+            inDropdown: true,
+            options: [
+              'Normal',
+              'H1',
+              'H2',
+              'H3',
+              'H4',
+              'H5',
+              'H6',
+              'Blockquote',
+            ],
+            className: undefined,
+            component: undefined,
+            dropdownClassName: undefined,
+          },
+
           image: {
             uploadCallback: uploadImageCallBack,
-            alt: {present: true, mandatory: false},
+            alt: {present: false, mandatory: false},
+            defaultSize: {
+              height: 'auto',
+              width: 'auto',
+            },
+            previewImage: true,
           },
         }}
       />

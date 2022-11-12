@@ -1,6 +1,6 @@
 export default {
   toolbar: {
-    inline: {inDropdown: true},
+    inline: {inDropdown: false, options: ['bold', 'italic', 'underline']},
     list: {inDropdown: true},
     textAlign: {inDropdown: true},
     link: {inDropdown: true},

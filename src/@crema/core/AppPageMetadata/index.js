@@ -10,7 +10,7 @@ const SITE_URL =
 
 const FACEBOOK_APP_ID = 'XXXXXXXXX';
 
-const defaultTitle = 'Crema-Ant Design admin Template';
+const defaultTitle = 'Buxoro maktabi';
 const defaultDescription =
   'Crema Ant is an Ant design based admin template. buid with CRA all ant library. ';
 const defaultImage =
@@ -30,7 +30,7 @@ const AppPageMetadata = ({children, ...rest}) => {
       noCrawl,
       published = '01-05-2021',
       updated,
-      category = 'admin Template, admin Dashboard, ',
+      category = 'Admin Dashboard',
       tags = 'admin Template, admin Dashboard, CRA, Antd, Ant Design, Less, Create React App, Firebase, Aws Cognito, Jwt-Auth, Mail App, Todo App, ',
     },
     pathname,
