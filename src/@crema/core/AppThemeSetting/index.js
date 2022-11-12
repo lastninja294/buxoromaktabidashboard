@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import {Button, Drawer, Switch} from 'antd';
+import {Button, Drawer} from 'antd';
 import {layoutTypes, navStyles} from '../../services/db/navigationStyle';
 import clsx from 'clsx';
 import IntlMessages from '../../utility/IntlMessages';
 import {CheckOutlined} from '@ant-design/icons';
-import {LayoutType, ThemeDirection} from '../../../shared/constants/AppEnums';
+import {LayoutType} from '../../../shared/constants/AppEnums';
 import AppScrollbar from '../AppScrollbar';
 import './index.style.less';
 import {FiSettings} from 'react-icons/fi';
@@ -17,26 +17,15 @@ import SidebarSettings from './SidebarSettings';
 const AppThemeSetting = () => {
   const [open, setCustomizerStatus] = useState(false);
 
-  const {
-    navStyle,
-    direction,
-    // footerType,
-    footer,
-    layoutType,
-  } = useLayoutContext();
+  const {navStyle, direction, layoutType} = useLayoutContext();
 
-  const {setFooter, updateDirection, updateNavStyle, updateLayoutType} =
-    useLayoutActionsContext();
+  const {updateNavStyle, updateLayoutType} = useLayoutActionsContext();
 
   const onLayoutChange = (layoutType) => {
     updateLayoutType(layoutType);
   };
   const onNavStyleChange = (navStyle) => {
     updateNavStyle(navStyle);
-  };
-
-  const onChangeRtlSetting = (checked) => {
-    updateDirection(checked ? ThemeDirection.RTL : ThemeDirection.LTR);
   };
 
   return (
@@ -64,20 +53,6 @@ const AppThemeSetting = () => {
           </div>
           <div className='customize-main'>
             <SidebarSettings />
-
-            <div className='customize-item'>
-              <div className='customize-switch-view'>
-                <h4>
-                  <IntlMessages id='customizer.rtlSupport' />
-                </h4>
-                <Switch
-                  className='customize-switch'
-                  checked={direction === ThemeDirection.RTL}
-                  onChange={onChangeRtlSetting}
-                  value='checkedA'
-                />
-              </div>
-            </div>
 
             <div className='customize-item'>
               <h4>
@@ -130,18 +105,6 @@ const AppThemeSetting = () => {
                     </div>
                   );
                 })}
-              </div>
-            </div>
-
-            <div className='customize-item'>
-              <div className='customize-switch-view'>
-                <h4>Footer</h4>
-                <Switch
-                  className='customize-switch'
-                  checked={footer}
-                  onChange={(value) => setFooter(value)}
-                  value='checkedA'
-                />
               </div>
             </div>
 

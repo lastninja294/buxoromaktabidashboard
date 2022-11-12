@@ -8,7 +8,10 @@ import {useSidebarContext} from './AppContextProvider/SidebarContextProvider';
 function getStyles(item, sidebarColorSet, isSidebarBgImage, index, isGroup) {
   const {pathname} = useLocation();
   const selectedKeys = pathname.substr(1);
+  console.log(selectedKeys);
   const defaultOpenKeys = selectedKeys.split('/');
+
+  
 
   if (index === 0 || isGroup) {
     return {

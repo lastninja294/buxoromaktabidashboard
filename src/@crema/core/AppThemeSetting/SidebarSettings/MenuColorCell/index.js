@@ -24,6 +24,7 @@ const MenuColorCell = ({sidebarColors}) => {
     sidebarMenuSelectedBgColor,
     sidebarMenuSelectedTextColor,
   } = sidebarColorSet;
+
   const {navStyle} = useLayoutContext();
 
   return (

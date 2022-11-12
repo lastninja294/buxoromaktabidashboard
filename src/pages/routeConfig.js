@@ -1,29 +1,47 @@
 import React from 'react';
-import {BiAlignLeft} from 'react-icons/bi';
-import {MdOutlineManageAccounts} from 'react-icons/md';
+import {GiTeacher} from 'react-icons/gi';
+import {MdOutlinePlayLesson, MdOutlineManageAccounts} from 'react-icons/md';
+import {IoNewspaperOutline} from 'react-icons/io5';
+import {AiOutlineLineChart} from 'react-icons/ai';
 
 const routesConfig = [
   {
     id: 'app',
-    title: 'Sample',
+    title: 'Dashboard',
     messageId: 'sidebar.sample',
     type: 'group',
     children: [
       {
-        id: 'page-1',
-        title: 'Page 1',
-        messageId: 'sidebar.sample.page1',
+        id: 'teachers',
+        title: 'Teachers',
+        messageId: 'sidebar.dashboard.teachers',
         type: 'item',
-        icon: <BiAlignLeft />,
-        path: '/sample/page-1',
+        icon: <GiTeacher />,
+        path: '/dashboard/teachers',
       },
       {
-        id: 'page-2',
-        title: 'Page 2',
-        messageId: 'sidebar.sample.page2',
+        id: 'courses',
+        title: 'Courses',
+        messageId: 'sidebar.dashboard.courses',
         type: 'item',
-        icon: <BiAlignLeft />,
-        path: '/sample/page-2',
+        icon: <MdOutlinePlayLesson />,
+        path: '/dashboard/courses',
+      },
+      {
+        id: 'results',
+        title: 'Results',
+        messageId: 'sidebar.dashboard.results',
+        type: 'item',
+        icon: <AiOutlineLineChart />,
+        path: '/dashboard/results',
+      },
+      {
+        id: 'news',
+        title: 'News',
+        messageId: 'sidebar.dashboard.news',
+        type: 'item',
+        icon: <IoNewspaperOutline />,
+        path: '/dashboard/results',
       },
     ],
   },

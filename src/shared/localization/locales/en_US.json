@@ -660,6 +660,10 @@
   "sidebar.ecommerce.orders": "Orders",
   "sidebar.ecommerce.customers": "Customers",
   "sidebar.ecommerce.cart": "Cart",
+  "sidebar.dashboard.teachers": "Teachers",
+  "sidebar.dashboard.news": "News",
+  "sidebar.dashboard.results": "Results",
+  "sidebar.dashboard.courses": "courses",
   "ecommerce.orderSummary": "Order Summary",
   "sidebar.ecommerce.checkout": "Checkout",
   "sidebar.ecommerce.confirmation": "Confirmation",
@@ -729,5 +733,3 @@
   "sidebar.layout.space": "Space",
   "sidebar.components.layout": "Layout"
 }
-
-

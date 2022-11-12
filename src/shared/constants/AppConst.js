@@ -9,4 +9,4 @@ export const defaultUser = {
   photoURL: '/assets/images/avatar/A11.jpg',
 };
 
-export const initialUrl = '/sample/page-1'; // this url will open after login
+export const initialUrl = '/dashboard/teachers'; // this url will open after login

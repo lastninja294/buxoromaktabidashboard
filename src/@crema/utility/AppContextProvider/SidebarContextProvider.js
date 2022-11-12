@@ -26,6 +26,8 @@ const SidebarContextProvider = ({children}) => {
     defaultConfig.sidebar.sidebarMenuSelectedColor,
   );
 
+  console.log(sidebarMenuSelectedColor);
+
   return (
     <SidebarContext.Provider
       value={{

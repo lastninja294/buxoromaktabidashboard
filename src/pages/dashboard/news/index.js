@@ -1,12 +1,12 @@
 import React from 'react';
 
-const Page1 = () => {
+const News = () => {
   return (
     <>
-      <h2>Sample page 1</h2>
+      <h2>News page</h2>
       <p>You can kick start your app</p>
     </>
   );
 };
 
-export default Page1;
+export default News;
