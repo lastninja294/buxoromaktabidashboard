@@ -22,8 +22,6 @@ const AppHeader = ({showDrawer}) => {
 
   const menuMobile = (
     <Menu>
-      <AppHeaderMessages />
-      <AppNotifications />
       <AppLanguageSwitcher />
     </Menu>
   );

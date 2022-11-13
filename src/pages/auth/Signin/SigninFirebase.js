@@ -1,26 +1,16 @@
 import React from 'react';
-import {Link, useHistory} from 'react-router-dom';
 import {Checkbox, Button, Form, Input} from 'antd';
-import {
-  GithubOutlined,
-  GoogleOutlined,
-  TwitterOutlined,
-} from '@ant-design/icons';
-import {FaFacebookF} from 'react-icons/fa';
+
 import {useIntl} from 'react-intl';
 import IntlMessages from '../../../@crema/utility/IntlMessages';
 import {useAuthMethod} from '../../../@crema/utility/AuthHooks';
 
 const SignInFirebase = () => {
-  const history = useHistory();
-  const {signInWithEmailAndPassword, signInWithPopup} = useAuthMethod();
+  const {signInWithEmailAndPassword} = useAuthMethod();
   const {messages} = useIntl();
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
-  };
-  const onGoToForgetPassword = () => {
-    history.push('/forget-password', {tab: 'firebase'});
   };
 
   function onRememberMe(e) {
@@ -58,9 +48,6 @@ const SignInFirebase = () => {
             <Checkbox onChange={onRememberMe}>
               <IntlMessages id='common.rememberMe' />
             </Checkbox>
-            <span className='sign-link' onClick={onGoToForgetPassword}>
-              <IntlMessages id='common.forgetPassword' />
-            </span>
           </div>
 
           <div className='form-btn-field'>
@@ -68,44 +55,7 @@ const SignInFirebase = () => {
               <IntlMessages id='common.login' />
             </Button>
           </div>
-
-          <div className='form-field-action'>
-            <span className='sign-text-grey'>
-              <IntlMessages id='common.dontHaveAccount' />
-            </span>
-            <Link to='/signup' className='underlineNone colorTextPrimary'>
-              <IntlMessages id='common.signup' />
-            </Link>
-          </div>
         </Form>
-      </div>
-
-      <div className='sign-footer'>
-        <span className='sign-text sign-text-grey'>
-          <IntlMessages id='common.orLoginWith' />
-        </span>
-        <div className='sign-socialLink'>
-          <Button
-            className='sign-icon-btn'
-            onClick={() => signInWithPopup('google')}
-            icon={<GoogleOutlined />}
-          />
-          <Button
-            className='sign-icon-btn'
-            icon={<FaFacebookF />}
-            onClick={() => signInWithPopup('facebook')}
-          />
-          <Button
-            className='sign-icon-btn'
-            icon={<GithubOutlined />}
-            onClick={() => signInWithPopup('github')}
-          />
-          <Button
-            className='sign-icon-btn'
-            icon={<TwitterOutlined />}
-            onClick={() => signInWithPopup('twitter')}
-          />
-        </div>
       </div>
     </div>
   );
