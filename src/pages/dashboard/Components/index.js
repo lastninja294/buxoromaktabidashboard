@@ -1,4 +1,4 @@
-import RichTextEditor from './FormElements/RichTextEditor';
+import RichTextEditor from './FormElements';
 import PaginationForTable from './Pagination';
 
 export {RichTextEditor, PaginationForTable};
