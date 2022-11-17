@@ -1,0 +1,46 @@
+@mixin borderBox {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  padding: 10px;
+  transition: border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.create-modal-form-scrollbar {
+  overflow-y: auto;
+  max-height: 75vh;
+  padding: 0 24px;
+}
+.create-modal-form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .create-modal-form-footer-item {
+    width: 100%;
+    align-self: flex-end;
+  }
+}
+.create-modal-form-add-btn {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.create-modal-form-boxs {
+  .ant-modal-body {
+    padding: 0;
+  }
+}
+.create-modal-form-action-btn {
+  width: 100%;
+  align-self: flex-end;
+}
+.create-modal-form-box {
+  @include borderBox();
+  list-style: none;
+  margin: 5px 0;
+  &:hover {
+    border-right-width: 1px !important;
+    border-color: #0A8FDC;
+    border-right-width: 1px;
+    outline: 0;
+  }
+}

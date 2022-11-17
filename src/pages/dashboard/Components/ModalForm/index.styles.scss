@@ -1,0 +1,23 @@
+.create-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .create-modal-footer-item {
+    width: 100%;
+    align-self: flex-end;
+  }
+}
+.create-add-btn {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.create-modal-box {
+  .ant-modal-body {
+    padding: 0;
+  }
+}
+.create-action-btn {
+  width: 100%;
+  align-self: flex-end;
+}

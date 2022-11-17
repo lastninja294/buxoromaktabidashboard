@@ -13,7 +13,10 @@ import configureStore from './redux/store';
 import {BrowserRouter} from 'react-router-dom';
 import './@crema/services/index';
 import FirebaseAuthProvider from './@crema/services/auth/firebase/FirebaseAuthProvider';
+import {QueryClient, QueryClientProvider} from 'react-query';
+import {ReactQueryDevtools} from 'react-query/devtools';
 
+const queryClinet = new QueryClient();
 const store = configureStore();
 
 const App = () => (
@@ -24,7 +27,13 @@ const App = () => (
           <BrowserRouter>
             <FirebaseAuthProvider>
               <AuthRoutes>
-                <AppLayout />
+                <QueryClientProvider client={queryClinet}>
+                  <AppLayout />
+                  <ReactQueryDevtools
+                    initialIsOpen={false}
+                    position='bottom-right'
+                  />
+                </QueryClientProvider>
               </AuthRoutes>
             </FirebaseAuthProvider>
           </BrowserRouter>
