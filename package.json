@@ -14,6 +14,7 @@
     "@babel/runtime": "^7.14.8",
     "@brainhubeu/react-carousel": "^2.0.4",
     "@craco/craco": "^6.2.0",
+    "@hookform/resolvers": "^2.9.10",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -54,10 +55,12 @@
     "react-dropzone": "^11.3.4",
     "react-google-maps": "^9.4.5",
     "react-helmet": "^6.1.0",
+    "react-hook-form": "^7.39.4",
     "react-icons": "^4.3.1",
     "react-image-timeline": "^3.2.13",
     "react-images": "^1.2.0-beta.7",
     "react-infinite-scroll-component": "^6.1.0",
+    "react-input-mask": "^2.0.4",
     "react-intl": "^5.20.6",
     "react-notifications-component": "^3.1.0",
     "react-photo-gallery": "^8.0.0",
@@ -86,7 +89,8 @@
     "simplebar-react": "^2.3.6",
     "slick-carousel": "^1.8.1",
     "use-url-search-params": "^2.3.13",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "craco  start",

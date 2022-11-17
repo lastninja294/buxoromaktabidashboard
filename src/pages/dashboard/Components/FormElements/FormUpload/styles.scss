@@ -1,0 +1,17 @@
+.create-upload {
+  max-width: 100%;
+  text-overflow: ellipsis;
+  .ant-upload-list {
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .ant-upload-list-item {
+    margin-right: 10px;
+  }
+  .ant-upload-list-item-name {
+    max-width: 200px;
+    text-overflow: ellipsis;
+  }
+}

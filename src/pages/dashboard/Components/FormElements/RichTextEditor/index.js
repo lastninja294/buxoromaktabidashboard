@@ -7,7 +7,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import styles from './styles.module.scss';
 import image from './image.png';
 
-export default () => {
+function RichTextEditor() {
   const [editorState, setEditorState] = React.useState(
     EditorState.createEmpty(),
   );
@@ -90,4 +90,6 @@ export default () => {
       />
     </div>
   );
-};
+}
+
+export default RichTextEditor;
