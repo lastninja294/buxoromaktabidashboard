@@ -26,19 +26,9 @@ const PersonalInfo = () => {
       <AppRowContainer gutter={16}>
         <Col xs={24} md={16}>
           <Form.Item
-            name='displayName'
+            name='admin_name'
             rules={[{required: true, message: 'Please input your Full Name!'}]}>
             <Input placeholder='Full Name' />
-          </Form.Item>
-        </Col>
-
-        <Col xs={24} md={16}>
-          <Form.Item
-            name='email'
-            rules={[
-              {required: true, message: 'Please input your e-mail address!'},
-            ]}>
-            <Input type='text' placeholder='E-mail' />
           </Form.Item>
         </Col>
 

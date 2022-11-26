@@ -8,11 +8,14 @@ const openNotificationWithIcon = (type) => {
     description: 'Malumotlarni olib kelishda xatolik yuz berdi! !',
   });
 };
-export const useGetData = (key) => {
+export const useGetData = (key, headers) => {
   return useQuery(
     key,
     async () => {
-      return axios.get(`https://axiosuchunsinovapi.herokuapp.com/${key}`);
+      return axios.get(
+        `http://167.71.60.204:9000/api/${key}`,
+        headers,
+      );
     },
     {
       onError: () => {

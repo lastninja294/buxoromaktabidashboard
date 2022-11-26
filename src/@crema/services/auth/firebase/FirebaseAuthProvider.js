@@ -99,10 +99,10 @@ const FirebaseAuthProvider = ({children}) => {
     }
   };
 
-  const signInWithEmailAndPassword = async ({email, password}) => {
+  const signInWithEmailAndPassword = async ({name, password}) => {
     dispatch({type: FETCH_START});
     try {
-      const {user} = await auth.signInWithEmailAndPassword(email, password);
+      const {user} = await auth.signInWithEmailAndPassword(name, password);
       setFirebaseData({user, isAuthenticated: true, isLoading: false});
       dispatch({type: FETCH_SUCCESS});
     } catch (error) {

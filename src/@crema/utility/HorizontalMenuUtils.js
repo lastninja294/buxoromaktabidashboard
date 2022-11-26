@@ -4,6 +4,7 @@ import React from 'react';
 import routesConfig from '../../pages/routeConfig';
 import {useIntl} from 'react-intl';
 import {useSidebarContext} from './AppContextProvider/SidebarContextProvider';
+import {useAuthUser} from './AuthHooks';
 
 function getStyles(item, sidebarColorSet, index) {
   const {pathname} = useLocation();
@@ -98,6 +99,7 @@ const renderHorMenu = (item, sidebarColorSet, index) => {
 };
 
 export const getRouteHorMenus = () => {
+  console.log(useAuthUser());
   const {sidebarColorSet} = useSidebarContext();
   return routesConfig.map((route) => renderHorMenu(route, sidebarColorSet, 0));
 };

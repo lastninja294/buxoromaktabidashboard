@@ -1,10 +1,7 @@
 import axios from 'axios';
 
 const jwtAxios = axios.create({
-  baseURL: 'https://crema-mongo-api.herokuapp.com/api/', //YOUR_API_URL HERE
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  baseURL: 'http://167.71.60.204:9000/api/login'.toString(), //YOUR_API_URL HERE
 });
 jwtAxios.interceptors.response.use(
   (res) => res,

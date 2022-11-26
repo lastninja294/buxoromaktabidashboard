@@ -6,7 +6,7 @@ import IntlMessages from '../../../@crema/utility/IntlMessages';
 import {useAuthMethod} from '../../../@crema/utility/AuthHooks';
 
 const SignInFirebase = () => {
-  const {signInWithEmailAndPassword} = useAuthMethod();
+  const {signInUser} = useAuthMethod();
   const {messages} = useIntl();
 
   const onFinishFailed = (errorInfo) => {
@@ -28,7 +28,7 @@ const SignInFirebase = () => {
             email: 'crema.demo@gmail.com',
             password: 'Pass@1!@all',
           }}
-          onFinish={signInWithEmailAndPassword}
+          onFinish={signInUser}
           onFinishFailed={onFinishFailed}>
           <Form.Item
             name='email'

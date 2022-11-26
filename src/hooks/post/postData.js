@@ -11,12 +11,13 @@ const openNotificationWithIcon = (type) => {
 export const usePostData = (key) => {
   const queryClient = useQueryClient();
   return useMutation(
-    (dataPOST) => {
-      return axios({
+    async (dataPOST) => {
+      const res = await axios({
         method: 'post',
-        url: `https://axiosuchunsinovapi.herokuapp.com/${key}`,
-        data: dataPOST,
-      }).then((res) => res.data);
+        url: `http://167.71.60.204:9000/api/login/${key}`,
+        data: dataPOST
+      });
+      return res.data;
     },
     {
       onError: (_error, _hero, context) => {

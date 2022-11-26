@@ -30,18 +30,15 @@ const SignInJwtAuth = () => {
         <Form
           className='sign-form'
           name='basic'
-          initialValues={{
-            remember: true,
-            email: 'crema.demo@gmail.com',
-            password: 'Pass@1!@all',
+          onFinish={(val) => {
+            signInUser(val);
           }}
-          onFinish={signInUser}
           onFinishFailed={onFinishFailed}>
           <Form.Item
-            name='email'
+            name='name'
             className='form-field'
-            rules={[{required: true, message: 'Please input your Email!'}]}>
-            <Input placeholder={messages['common.email']} />
+            rules={[{required: true, message: 'Please input your username!'}]}>
+            <Input placeholder={messages['common.name']} />
           </Form.Item>
 
           <Form.Item

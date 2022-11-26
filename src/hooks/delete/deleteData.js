@@ -1,3 +1,4 @@
+import {message} from 'antd';
 import axios from 'axios';
 import {useMutation, useQueryClient} from 'react-query';
 
@@ -6,16 +7,17 @@ export const useDeleteData = (key) => {
   return useMutation(
     (dataDELETE) =>
       axios({
+        headers: {
+          access_token:
+            'BMToken eyJhbGciOiJIUzI1NiJ9.YTE0Nzc2MWItOWE5ZS00YzIwLWJiZWItODYzYTQ2MzBhY2Rl.S0JAQm3NxO0kwF8OV1RT0NZzIxy9EMlZwTPuQ2OmPR0',
+        },
         method: 'delete',
-        url: `https://axiosuchunsinovapi.herokuapp.com/${key}`,
+        url: `http://167.71.60.204:9000/api/${key}`,
         data: dataDELETE,
       }),
     {
-      onError: (err, userUpdates, context) => {
-        queryClient.setQueryData(
-          [key, context.userUpdates.id],
-          context.previousUser,
-        );
+      onError: () => {
+        message.error('Something went wrong');
       },
 
       onSettled: () => {

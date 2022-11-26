@@ -55,7 +55,7 @@ body {
   width: 9px;
   height: 9px;
   border-radius: 100%;
-  background-color: #1890ff;
+  background-color: #2a3e5c;
   transform: scale(0.75);
   display: block;
   position: absolute;
@@ -92,6 +92,5 @@ body {
     transform: rotate(405deg);
   }
 }
-
 
 /*# sourceMappingURL=loader.css.map */

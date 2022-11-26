@@ -34,14 +34,29 @@ const generateRoutes = (structure) => {
   }
 
   if (structure?.authorizedStructure) {
-    dynamicRoutes.push(
-      ...routesGenerator(
-        isAuthenticated,
-        authorizedStructure,
-        'authorized',
-        isAuthenticated ? userRole : null,
-      ),
-    );
+    if (userRole.length === 1) {
+      const clone = JSON.parse(JSON.stringify(authorizedStructure));
+      clone.routes = authorizedStructure.routes.filter(
+        (e) => e.path !== '/dashboard/admins',
+      );
+      dynamicRoutes.push(
+        ...routesGenerator(
+          isAuthenticated,
+          clone,
+          'authorized',
+          isAuthenticated ? userRole : null,
+        ),
+      );
+    } else {
+      dynamicRoutes.push(
+        ...routesGenerator(
+          isAuthenticated,
+          authorizedStructure,
+          'authorized',
+          isAuthenticated ? userRole : null,
+        ),
+      );
+    }
   }
 
   if (structure?.unAuthorizedStructure) {
