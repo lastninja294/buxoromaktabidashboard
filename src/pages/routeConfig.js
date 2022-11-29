@@ -1,9 +1,15 @@
 import React from 'react';
 import {GiTeacher} from 'react-icons/gi';
-import {MdOutlinePlayLesson, MdOutlineManageAccounts} from 'react-icons/md';
+import {
+  MdOutlinePlayLesson,
+  MdOutlineManageAccounts,
+  MdPlaylistAddCheck,
+} from 'react-icons/md';
 import {IoNewspaperOutline} from 'react-icons/io5';
 import {AiOutlineLineChart} from 'react-icons/ai';
 import {VscTools} from 'react-icons/vsc';
+import {RiAdminLine} from 'react-icons/ri';
+// import {useAuthUser} from '@crema/utility/AuthHooks';
 
 const routesConfig = [
   {
@@ -43,6 +49,22 @@ const routesConfig = [
         type: 'item',
         icon: <IoNewspaperOutline />,
         path: '/dashboard/news',
+      },
+      {
+        id: 'registeredUsers',
+        title: 'RegisteredUsers',
+        messageId: 'sidebar.dashboard.registeredUsers',
+        type: 'item',
+        icon: <MdPlaylistAddCheck />,
+        path: '/dashboard/registeredUsers',
+      },
+      {
+        id: 'Admins',
+        title: 'admins',
+        messageId: 'sidebar.dashboard.admins',
+        type: 'super',
+        icon: <RiAdminLine />,
+        path: '/dashboard/admins',
       },
       {
         id: 'components',

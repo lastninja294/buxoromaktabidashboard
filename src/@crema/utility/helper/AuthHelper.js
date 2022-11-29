@@ -20,7 +20,6 @@ export const getUserFromFirebase = (user) => {
       id: 1,
       uid: user.uid,
       displayName: user.displayName ? user.displayName : 'Bekorchi',
-      email: user.email,
       photoURL: user.photoURL ? user.photoURL : image.toString(),
       role: authRole.user,
     };
@@ -34,7 +33,7 @@ export const getUserFromAWS = (user) => {
       displayName: user.attributes.name ? user.attributes.name : 'Crema User',
       email: user.attributes.email,
       photoURL: user.photoURL,
-      role: authRole.user,
+      role: authRole.admin,
     };
   return user;
 };
@@ -43,11 +42,10 @@ export const getUserFromJwtAuth = (user) => {
   if (user)
     return {
       id: 1,
-      uid: user._id,
-      displayName: user.name,
-      email: user.email,
+      uid: user.admin_id,
+      displayName: user.admin_name,
       photoURL: user.avatar,
-      role: authRole.user,
+      role: user.admin_role === 'superadmin' ? ['user', 'admin'] : ['user'],
     };
   return user;
 };

@@ -9,30 +9,14 @@ import RichTextEditor from './FormElements/RichTextEditor';
 // import FormElements from './FormElements';
 
 function Components() {
-  // exemple editor data
-  const str = JSON.stringify({
-    blocks: [
-      {
-        key: 'dh5e6',
-        text: 'Hello World!',
-        type: 'unstyled',
-        depth: 0,
-        inlineStyleRanges: [],
-        entityRanges: [],
-        data: {},
-      },
-    ],
-    entityMap: {},
-  });
-  // exemple initialEditValue
   const initialEditValue = {
     title: {
       Uz: 'title uz',
       Ru: 'title ru',
     },
     description: {
-      Uz: str,
-      Ru: str,
+      Uz: "",
+      Ru: "",
     },
     name: {
       Uz: 'string uz',

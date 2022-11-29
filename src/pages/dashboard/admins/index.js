@@ -1,14 +1,14 @@
 import AppPageMetadata from '@crema/core/AppPageMetadata';
 import React from 'react';
 
-const Teachers = () => {
+const Admins = () => {
   return (
     <>
-      <AppPageMetadata title='Teachers' />
-      <h2>Teachers page</h2>
+      <AppPageMetadata title='Admins' />
+      <h2>Admins page</h2>
       <p>You can kick start your app</p>
     </>
   );
 };
 
-export default Teachers;
+export default Admins;

@@ -4,6 +4,7 @@ import React from 'react';
 import routesConfig from '../../pages/routeConfig';
 import {useIntl} from 'react-intl';
 import {useSidebarContext} from './AppContextProvider/SidebarContextProvider';
+import {useAuthUser} from './AuthHooks';
 
 function getStyles(item, sidebarColorSet, isSidebarBgImage, index, isGroup) {
   const {pathname} = useLocation();
@@ -115,9 +116,17 @@ const renderMenu = (item, sidebarColorSet, isSidebarBgImage, index) => {
 };
 
 export const getRouteMenus = () => {
+  const {user} = useAuthUser();
   const {sidebarColorSet} = useSidebarContext();
   const {isSidebarBgImage} = useSidebarContext();
-  return routesConfig.map((route) =>
-    renderMenu(route, sidebarColorSet, isSidebarBgImage, 0),
-  );
+  return routesConfig.map((route) => {
+    if (user.role.length === 1) {
+      const routeClone = JSON.parse(JSON.stringify(route));
+      routeClone.children = routeClone.children.filter(
+        (e) => e.title !== 'admins',
+      );
+      return renderMenu(routeClone, sidebarColorSet, isSidebarBgImage, 0);
+    }
+    return renderMenu(route, sidebarColorSet, isSidebarBgImage, 0);
+  });
 };
