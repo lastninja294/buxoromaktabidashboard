@@ -1,20 +1,32 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Editor} from 'react-draft-wysiwyg';
-import {EditorState, convertToRaw} from 'draft-js';
+import {EditorState} from 'draft-js';
+import {Controller} from 'react-hook-form';
+import PropTypes from 'prop-types';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import draftToHtml from 'draftjs-to-html';
-import styles from './styles.module.scss';
+// import draftToHtml from 'draftjs-to-html';
+// import DraftDefaultConfig from './config';
+import './styles.module.scss';
 import {usePostData} from 'hooks';
 
-function RichTextEditor() {
-  const [editorState, setEditorState] = React.useState(
-    EditorState.createEmpty(),
-  );
+function RichTextEditor({
+  label = 'description',
+  control,
+  placeholder,
+  error,
+  name,
+  defaultValue = null,
+  ...others
+}) {
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
-  const handleEditorChange = (state) => {
-    setEditorState(state);
-    console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())));
-  };
+  // const [editorState, setEditorState] = useState(() =>
+  //   defaultValue
+  //     ? EditorState.createWithContent(
+  //         ContentState.createFromBlockArray(convertFromHTML(draftToHtml(data))),
+  //       )
+  //     : EditorState.createEmpty(),
+  // );
 
   const {mutateAsync} = usePostData('files');
 
@@ -42,66 +54,102 @@ function RichTextEditor() {
       console.log('bu ishladi');
     });
   }
-  return (
-    <div>
-      <Editor
-        toolbarOnHidden
-        editorState={editorState}
-        editorClassName={styles.editor}
-        onEditorStateChange={handleEditorChange}
-        editorStyle={{maxHeight: '320px'}}
-        toolbar={{
-          options: [
-            'inline',
-            'blockType',
-            'fontSize',
-            'fontFamily',
-            'list',
-            'textAlign',
-            'image',
-            'history',
-          ],
-          inline: {
-            inDropdown: false,
-            options: [
-              'bold',
-              'italic',
-              'underline',
-              'strikethrough',
-              'superscript',
-              'subscript',
-            ],
-          },
-          blockType: {
-            inDropdown: true,
-            options: [
-              'Normal',
-              'H1',
-              'H2',
-              'H3',
-              'H4',
-              'H5',
-              'H6',
-              'Blockquote',
-            ],
-            className: undefined,
-            component: undefined,
-            dropdownClassName: undefined,
-          },
 
-          image: {
-            uploadCallback: uploadImageCallBack,
-            alt: {present: false, mandatory: false},
-            defaultSize: {
-              height: 'auto',
-              width: 'auto',
-            },
-            previewImage: true,
-          },
-        }}
+  return (
+    <>
+      <Controller
+        control={control}
+        name={name}
+        defaultValue={defaultValue}
+        render={({field}) => (
+          <div>
+            <label
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                margin: '10px 0 0 0',
+              }}>
+              {label}
+              <Editor
+                {...field}
+                toolbarOnHidden
+                editorState={editorState}
+                // editorClassName={styles.editor}
+                onEditorStateChange={setEditorState}
+                onChange={(e) => {
+                  console.log(e, 'eeeeeee');
+                }}
+                placeholder={placeholder}
+                editorStyle={{maxHeight: '320px'}}
+                toolbar={{
+                  options: [
+                    'inline',
+                    'blockType',
+                    'fontSize',
+                    'fontFamily',
+                    'list',
+                    'textAlign',
+                    'image',
+                    'history',
+                  ],
+                  inline: {
+                    inDropdown: false,
+                    options: [
+                      'bold',
+                      'italic',
+                      'underline',
+                      'strikethrough',
+                      'superscript',
+                      'subscript',
+                    ],
+                  },
+                  blockType: {
+                    inDropdown: true,
+                    options: [
+                      'Normal',
+                      'H1',
+                      'H2',
+                      'H3',
+                      'H4',
+                      'H5',
+                      'H6',
+                      'Blockquote',
+                    ],
+                    className: undefined,
+                    component: undefined,
+                    dropdownClassName: undefined,
+                  },
+
+                  image: {
+                    uploadCallback: uploadImageCallBack,
+                    alt: {present: false, mandatory: false},
+                    defaultSize: {
+                      height: 'auto',
+                      width: 'auto',
+                    },
+                    previewImage: true,
+                  },
+                }}
+              />
+            </label>
+          </div>
+        )}
+        {...others}
       />
-    </div>
+      {error && (
+        <p style={{fontSize: '12px', color: 'red'}}>{error?.message}</p>
+      )}
+    </>
   );
 }
 
 export default RichTextEditor;
+
+RichTextEditor.propTypes = {
+  control: PropTypes.any,
+  placeholder: PropTypes.string,
+  error: PropTypes.any,
+  name: PropTypes.any,
+  defaultValue: PropTypes.any,
+  label: PropTypes.string,
+};

@@ -5,9 +5,8 @@ import PropTypes from 'prop-types';
 import FormElements from 'pages/dashboard/Components/FormElements';
 
 function ModalTabs({
-  isTitle,
-  isBody,
-  isName,
+  isMultiNameArr,
+  languageTabs,
   register,
   error,
   control,
@@ -15,194 +14,71 @@ function ModalTabs({
   initialValue,
 }) {
   const {TabPane} = Tabs;
-  const [tab, settab] = useState('Uz');
+  const [tab, settab] = useState(languageTabs[0]);
   function callback(key) {
     settab(key);
   }
+
+  const isAllErrorLang = (error, values, lang) => {
+    if (!error) return null;
+    let isErr = false;
+    for (const item of values) {
+      if (item.nameValue in error) {
+        error[item.nameValue][lang]
+          ? (isErr = true || isErr)
+          : (isErr = false || isErr);
+      }
+    }
+    return isErr;
+  };
+  console.log(error, 'error');
   return (
     <>
-      <Tabs defaultActiveKey='Uz' activeKey={tab} onChange={callback}>
-        <TabPane
-          tab={
-            <span>
-              Uzbekcha
-              <FrownOutlined
-                hidden={
-                  error
-                    ? !(
-                        'titleUz' in error ||
-                        'bodyUz' in error ||
-                        'nameUz' in error
-                      )
-                    : true
-                }
-                style={{color: 'red', marginLeft: '10px'}}
-              />
-            </span>
-          }
-          key='Uz'
-        />
-        <TabPane
-          tab={
-            <span>
-              Russian
-              <FrownOutlined
-                hidden={
-                  error
-                    ? !(
-                        'titleRu' in error ||
-                        'bodyRu' in error ||
-                        'nameRu' in error
-                      )
-                    : true
-                }
-                style={{color: 'red', marginLeft: '10px'}}
-              />
-            </span>
-          }
-          key='Ru'
-        />
-        <TabPane
-          tab={
-            <span>
-              English
-              <FrownOutlined
-                hidden={
-                  error
-                    ? !(
-                        'titleEn' in error ||
-                        'bodyEn' in error ||
-                        'nameEn' in error
-                      )
-                    : true
-                }
-                style={{color: 'red', marginLeft: '10px'}}
-              />
-            </span>
-          }
-          key='En'
-        />
+      <Tabs
+        defaultActiveKey={languageTabs[0]}
+        activeKey={tab}
+        onChange={callback}>
+        {languageTabs.map((item) => (
+          <TabPane
+            tab={
+              <span>
+                {item === 'Uz' ? 'Uzbekcha' : 'Russian'}
+                <FrownOutlined
+                  hidden={
+                    error ? !isAllErrorLang(error, isMultiNameArr, item) : true
+                  }
+                  style={{color: 'red', marginLeft: '10px'}}
+                />
+              </span>
+            }
+            key={item}
+          />
+        ))}
       </Tabs>
-      <div style={tab !== 'Uz' ? {display: 'none'} : null}>
-        {isTitle ? (
-          <FormElements
-            type='input'
-            control={control}
-            index={index}
-            error={error?.titleUz}
-            name={`create[${index}].titleUz`}
-            register={register}
-            defaultValue={initialValue.titleUz}
-            placeholder='titleUz'
-            label='title Uz'
-          />
-        ) : null}
-        {isBody ? (
-          <FormElements
-            type='editor'
-            control={control}
-            index={index}
-            name={`create[${index}].bodyUz`}
-            error={error?.bodyUz}
-            defaultValue={initialValue.bodyUz}
-            placeholder='bodyUz'
-            label='body Uz'
-          />
-        ) : null}
-        {isName ? (
-          <FormElements
-            type='input'
-            control={control}
-            index={index}
-            error={error?.nameUz}
-            name={`create[${index}].nameUz`}
-            register={register}
-            defaultValue={initialValue.nameUz}
-            placeholder='nameUz'
-            label='name Uz'
-          />
-        ) : null}
-      </div>
-      <div style={tab !== 'Ru' ? {display: 'none'} : null}>
-        {isTitle ? (
-          <FormElements
-            type='input'
-            control={control}
-            index={index}
-            error={error?.titleRu}
-            name={`create[${index}].titleRu`}
-            register={register}
-            defaultValue={initialValue.titleRu}
-            placeholder='titleRu'
-            label='title Ru'
-          />
-        ) : null}
-        {isBody ? (
-          <FormElements
-            type='editor'
-            control={control}
-            index={index}
-            name={`create[${index}].bodyRu`}
-            error={error?.bodyRu}
-            defaultValue={initialValue.bodyRu}
-            placeholder='bodyRu'
-            label='body Ru'
-          />
-        ) : null}
-        {isName ? (
-          <FormElements
-            type='input'
-            control={control}
-            index={index}
-            error={error?.nameRu}
-            name={`create[${index}].nameRu`}
-            register={register}
-            defaultValue={initialValue.nameRu}
-            placeholder='nameRu'
-            label='name Ru'
-          />
-        ) : null}
-      </div>
-      <div style={tab !== 'En' ? {display: 'none'} : null}>
-        {isTitle ? (
-          <FormElements
-            type='input'
-            control={control}
-            index={index}
-            error={error?.titleEn}
-            name={`create[${index}].titleEn`}
-            register={register}
-            defaultValue={initialValue.titleEn}
-            placeholder='titleEn'
-            label='title En'
-          />
-        ) : null}
-        {isBody ? (
-          <FormElements
-            type='editor'
-            control={control}
-            index={index}
-            name={`create[${index}].bodyEn`}
-            error={error?.bodyEn}
-            defaultValue={initialValue.bodyEn}
-            placeholder='bodyEn'
-            label='body En'
-          />
-        ) : null}
-        {isName ? (
-          <FormElements
-            type='input'
-            control={control}
-            index={index}
-            error={error?.nameEn}
-            name={`create[${index}].nameEn`}
-            register={register}
-            defaultValue={initialValue.nameEn}
-            placeholder='nameEn'
-            label='name En'
-          />
-        ) : null}
-      </div>
+
+      {languageTabs.map((lang, key) => {
+        return (
+          <div style={tab !== lang ? {display: 'none'} : null} key={key}>
+            {isMultiNameArr.map(({nameValue, type}, i) => {
+              console.log(type, nameValue, 'wuuuuuuuuuu', i);
+              return (
+                <FormElements
+                  key={i}
+                  type={'input'}
+                  control={control}
+                  index={index}
+                  error={error && error[nameValue]?.[lang]}
+                  name={`create[${index}].${nameValue}.${lang}`}
+                  register={register}
+                  defaultValue={initialValue[nameValue]?.[lang]}
+                  placeholder={nameValue}
+                  label={nameValue}
+                />
+              );
+            })}
+          </div>
+        );
+      })}
     </>
   );
 }
@@ -210,12 +86,11 @@ function ModalTabs({
 export default ModalTabs;
 
 ModalTabs.propTypes = {
-  isTitle: PropTypes.any,
-  isBody: PropTypes.any,
-  isName: PropTypes.any,
+  isMultiNameArr: PropTypes.array,
+  languageTabs: PropTypes.array,
   register: PropTypes.any,
-  error: PropTypes.any,
+  error: PropTypes.object,
   control: PropTypes.any,
-  index: PropTypes.any,
-  initialValue: PropTypes.any,
+  index: PropTypes.number,
+  initialValue: PropTypes.object,
 };
