@@ -1,33 +1,45 @@
 import React from 'react';
 import {Editor} from 'react-draft-wysiwyg';
-import {EditorState} from 'draft-js';
+import {EditorState, convertToRaw} from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-// import draftToHtml from 'draftjs-to-html';
-// import DraftDefaultConfig from './config';
+import draftToHtml from 'draftjs-to-html';
 import styles from './styles.module.scss';
-import image from './image.png';
+import {usePostData} from 'hooks';
 
 function RichTextEditor() {
   const [editorState, setEditorState] = React.useState(
     EditorState.createEmpty(),
   );
 
-  //   console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+  const handleEditorChange = (state) => {
+    setEditorState(state);
+    console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+  };
 
-  function uploadImageCallBack(file) {
-    // Xullas Api tayyor bo'ganda mashetda rasmni post qivoraman tamom shu bilan
-    console.log(file);
+  const {mutateAsync} = usePostData('files');
+
+  async function uploadImageCallBack(file) {
+    const data = new FormData();
+    data.append('file', file);
+    let imgUrl = '';
+    await mutateAsync(data)
+      .then((a) => {
+        imgUrl = a?.fileUrl;
+      })
+      .catch(() => {
+        imgUrl = '';
+      });
     return new Promise((resolve, reject) => {
-      const a = true;
-      if (a) {
+      if (imgUrl.length > 0) {
         resolve({
           data: {
-            link: image,
+            link: imgUrl,
           },
         });
       } else {
-        reject('heheh');
+        reject('Xatolik');
       }
+      console.log('bu ishladi');
     });
   }
   return (
@@ -36,7 +48,7 @@ function RichTextEditor() {
         toolbarOnHidden
         editorState={editorState}
         editorClassName={styles.editor}
-        onEditorStateChange={setEditorState}
+        onEditorStateChange={handleEditorChange}
         editorStyle={{maxHeight: '320px'}}
         toolbar={{
           options: [

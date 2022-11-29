@@ -8,8 +8,7 @@ export const useDeleteData = (key) => {
     (dataDELETE) =>
       axios({
         headers: {
-          access_token:
-            'BMToken eyJhbGciOiJIUzI1NiJ9.YTE0Nzc2MWItOWE5ZS00YzIwLWJiZWItODYzYTQ2MzBhY2Rl.S0JAQm3NxO0kwF8OV1RT0NZzIxy9EMlZwTPuQ2OmPR0',
+          access_token: 'BMToken ' + localStorage.getItem('token'),
         },
         method: 'delete',
         url: `http://167.71.60.204:9000/api/${key}`,

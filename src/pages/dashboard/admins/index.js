@@ -1,12 +1,13 @@
 import AppPageMetadata from '@crema/core/AppPageMetadata';
 import React from 'react';
+import {DynamicTable} from '../Components';
 
 const Admins = () => {
   return (
     <>
       <AppPageMetadata title='Admins' />
       <h2>Admins page</h2>
-      <p>You can kick start your app</p>
+      <DynamicTable routeForData='admins/all' />
     </>
   );
 };

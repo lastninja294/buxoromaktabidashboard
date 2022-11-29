@@ -68,7 +68,11 @@ function Components() {
       />
       {/* edit exemple */}
       <h4>Dynamic table</h4>
-      <DynamicTable routeForData={'news/all'} />
+      <DynamicTable routeForData={'teachers/all'} />
+
+
+
+      
     </div>
   );
 }

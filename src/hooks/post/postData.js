@@ -13,9 +13,12 @@ export const usePostData = (key) => {
   return useMutation(
     async (dataPOST) => {
       const res = await axios({
+        headers: {
+          access_token: 'BMToken ' + localStorage.getItem('token'),
+        },
         method: 'post',
-        url: `http://167.71.60.204:9000/api/login/${key}`,
-        data: dataPOST
+        url: `http://167.71.60.204:9000/api/${key}`,
+        data: dataPOST,
       });
       return res.data;
     },

@@ -9,8 +9,7 @@ import PropTypes from 'prop-types';
 const DynamicTable = ({routeForData}) => {
   const {data, isSuccess, refetch} = useGetData(routeForData, {
     headers: {
-      access_token:
-        'BMToken eyJhbGciOiJIUzI1NiJ9.YTE0Nzc2MWItOWE5ZS00YzIwLWJiZWItODYzYTQ2MzBhY2Rl.S0JAQm3NxO0kwF8OV1RT0NZzIxy9EMlZwTPuQ2OmPR0',
+      access_token: `BMToken ${localStorage.getItem('token')}`,
     },
   });
 
@@ -165,12 +164,6 @@ const DynamicTable = ({routeForData}) => {
           },
         }}
       />
-      <div
-        onClick={async () =>
-          mutateAsync({id: 'ba870527-d5c0-4fd1-ac80-d336e007c17a'})
-        }>
-        Hello
-      </div>
     </div>
   );
 };

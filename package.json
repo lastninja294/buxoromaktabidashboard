@@ -99,7 +99,8 @@
     "lint": "eslint \"src/**/*.+(js|jsx)\"",
     "lint:fix": "eslint --fix \"src/**/*.+(js|jsx)\"",
     "format": "prettier --write \"src/**/*.+(js|jsx)\"",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "build-dev": "dotenv -e .env.development react-app-rewired build"
   },
   "eslintConfig": {
     "extends": [

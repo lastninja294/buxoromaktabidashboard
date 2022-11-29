@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import {useIntl} from 'react-intl';
 import {Button, Checkbox, Form, Input} from 'antd';
 
@@ -66,11 +66,8 @@ const SignInJwtAuth = () => {
 
           <div className='form-field-action'>
             <span className='sign-text-grey'>
-              <IntlMessages id='common.dontHaveAccount' />
+              Developed by <a href={'http://www.abez.uz'}> ABEZ IT Company</a>
             </span>
-            <Link to='/signup' className='underlineNone colorTextPrimary'>
-              <IntlMessages id='common.signup' />
-            </Link>
           </div>
         </Form>
       </div>

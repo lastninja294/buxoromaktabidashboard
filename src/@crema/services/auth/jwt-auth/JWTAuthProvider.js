@@ -23,7 +23,7 @@ const JWTAuthAuthProvider = ({children}) => {
     isLoading: false,
   });
 
-  const {mutateAsync} = usePostData('');
+  const {mutateAsync} = usePostData('login');
 
   const dispatch = useDispatch();
 
