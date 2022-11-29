@@ -84,22 +84,20 @@ function GenerateModalForm({
         })}
         className='create-modal-form-scrollbar'>
         <ul>
-          {fields.map((item, index) => {
-            return (
-              <li key={item.id} className='create-modal-form-box'>
-                <FormFields
-                  type={type}
-                  item={item}
-                  index={index}
-                  remove={remove}
-                  control={control}
-                  error={errors.create?.[index]}
-                  register={register}
-                  initialValue={initialValue}
-                />
-              </li>
-            );
-          })}
+          {fields.map((item, index) => (
+            <li key={item.id} className='create-modal-form-box'>
+              <FormFields
+                type={type}
+                item={item}
+                index={index}
+                remove={remove}
+                control={control}
+                error={errors.create?.[index]}
+                register={register}
+                initialValue={initialValue}
+              />
+            </li>
+          ))}
         </ul>
         <input type='submit' hidden={true} ref={refFrom} />
       </form>
@@ -111,11 +109,10 @@ export default GenerateModalForm;
 
 GenerateModalForm.propTypes = {
   type: PropTypes.string,
-  visible: PropTypes.any,
+  visible: PropTypes.bool,
   onCancel: PropTypes.any,
-  pageName: PropTypes.any,
-  initialValue: PropTypes.any,
-  schema: PropTypes.any,
+  initialValue: PropTypes.object,
+  schema: PropTypes.object,
   onSubmit: PropTypes.any,
-  isLoading: PropTypes.any,
+  isLoading: PropTypes.bool,
 };

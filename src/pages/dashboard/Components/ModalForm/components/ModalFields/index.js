@@ -14,32 +14,44 @@ const FormFields = ({
   index,
   initialValue,
 }) => {
-  const isTitle =
-    'titleUz' in initialValue &&
-    'titleRu' in initialValue &&
-    'titleEn' in initialValue;
-  const isBody =
-    'bodyUz' in initialValue &&
-    'bodyRu' in initialValue &&
-    'bodyEn' in initialValue;
-  const isName =
-    'nameUz' in initialValue &&
-    'nameRu' in initialValue &&
-    'nameEn' in initialValue;
-    
-  const isEmail = 'email' in initialValue;
-  const isPhone = 'phone' in initialValue;
-  const isPhoto = 'photo' in initialValue;
-  const isAddress = 'address' in initialValue;
-  const isCategory = 'category' in initialValue;
+  const isNameValue = () => {
+    let isValue = [];
+    let isMultiValues = [];
+    for (const key in initialValue) {
+      if (
+        typeof initialValue[key] === 'object' &&
+        'Uz' in initialValue[key] &&
+        'Ru' in initialValue[key]
+      ) {
+        let pushValue = {
+          type: key === 'description' ? 'editor' : 'input',
+          nameValue: key,
+        };
+        isMultiValues.push(pushValue);
+      } else {
+        let pushValue = {
+          type:
+            key === 'phone'
+              ? 'phone'
+              : key === 'image' || key === 'video' || key === 'photo'
+              ? 'upload'
+              : 'input',
+          nameValue: key,
+        };
+        isValue.push(pushValue);
+      }
+    }
+    return [isValue, isMultiValues];
+  };
+
+  const [isNameArr, isMultiNameArr] = isNameValue();
 
   return (
     <div className='create-modal-fields'>
-      {isTitle || isBody || isName ? (
+      {isMultiNameArr ? (
         <ModalTabs
-          isTitle={isTitle}
-          isBody={isBody}
-          isName={isName}
+          isMultiNameArr={isMultiNameArr}
+          languageTabs={['Uz', 'Ru']}
           remove={remove}
           register={register}
           error={error}
@@ -48,71 +60,22 @@ const FormFields = ({
           initialValue={initialValue}
         />
       ) : null}
-      {isEmail ? (
-        <FormElements
-          type='input'
-          control={control}
-          index={index}
-          error={error?.email}
-          name={`create[${index}].email`}
-          register={register}
-          defaultValue={initialValue.email}
-          placeholder='email'
-          label='email'
-        />
-      ) : null}
-      {isAddress ? (
-        <FormElements
-          type='input'
-          control={control}
-          index={index}
-          error={error?.address}
-          name={`create[${index}].address`}
-          register={register}
-          defaultValue={initialValue.address}
-          placeholder='address'
-          label='address'
-        />
-      ) : null}
-      {isCategory ? (
-        <FormElements
-          type='select'
-          control={control}
-          index={index}
-          error={error?.category}
-          name={`create[${index}].category`}
-          register={register}
-          defaultValue={initialValue.category}
-          placeholder='category'
-          label='category'
-        />
-      ) : null}
-      {isPhone ? (
-        <FormElements
-          type='phone'
-          control={control}
-          index={index}
-          error={error?.phone}
-          name={`create[${index}].phone`}
-          register={register}
-          placeholder='phone'
-          defaultValue={initialValue.phone}
-          label='phone number'
-        />
-      ) : null}
 
-      {isPhoto ? (
+      {isNameArr.map(({type, nameValue}, key) => (
         <FormElements
-          type='upload'
+          key={key}
+          type={type}
           control={control}
           index={index}
-          error={error?.photo}
-          name={`create[${index}].photo`}
+          error={error && error[nameValue]}
+          name={`create[${index}].${nameValue}`}
           register={register}
-          defaultValue={initialValue.photo}
-          label='photo'
+          defaultValue={initialValue[nameValue]}
+          placeholder={nameValue}
+          label={nameValue}
         />
-      ) : null}
+      ))}
+
       {type == 'create' ? (
         <Button
           type='link'
@@ -135,8 +98,8 @@ FormFields.propTypes = {
   type: PropTypes.string,
   remove: PropTypes.any,
   register: PropTypes.any,
-  error: PropTypes.any,
+  error: PropTypes.object,
   control: PropTypes.any,
-  index: PropTypes.any,
-  initialValue: PropTypes.any,
+  index: PropTypes.number,
+  initialValue: PropTypes.object,
 };
