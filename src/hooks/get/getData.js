@@ -8,14 +8,15 @@ const openNotificationWithIcon = (type) => {
     description: 'Malumotlarni olib kelishda xatolik yuz berdi! !',
   });
 };
-export const useGetData = (key, headers) => {
+export const useGetData = (key) => {
   return useQuery(
     key,
     async () => {
-      return axios.get(
-        `http://167.71.60.204:9000/api/${key}`,
-        headers,
-      );
+      return axios.get(`https://buxoromaktabi.uz/api/${key}`, {
+        headers: {
+          Authorization: 'BMToken ' + localStorage.getItem('token'),
+        },
+      });
     },
     {
       onError: () => {

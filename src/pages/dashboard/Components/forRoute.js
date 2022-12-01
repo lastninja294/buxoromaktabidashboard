@@ -45,8 +45,8 @@ function Components() {
       Ru: '',
     },
     description: {
-      Uz: null,
-      Ru: null,
+      Uz: '',
+      Ru: '',
     },
     age: '',
     gender: '',

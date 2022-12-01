@@ -11,12 +11,16 @@ const openNotificationWithIcon = (type) => {
 export const usePutData = (key) => {
   const queryClient = useQueryClient();
   return useMutation(
-    (dataPUT) => {
-      return axios({
+    async (dataPUT) => {
+      const res = await axios({
+        headers: {
+          Authorization: 'BMToken ' + localStorage.getItem('token'),
+        },
         method: 'put',
-        url: `https://axiosuchunsinovapi.herokuapp.com${key}`,
+        url: `https://buxoromaktabi.uz/${key}`,
         data: dataPUT,
-      }).then((res) => res.data);
+      });
+      return res.data;
     },
     {
       onError: (err, userUpdates, context) => {

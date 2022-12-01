@@ -7,11 +7,7 @@ import {AiOutlineDelete, AiOutlineEdit} from 'react-icons/ai';
 import PropTypes from 'prop-types';
 
 const DynamicTable = ({routeForData}) => {
-  const {data, isSuccess, refetch} = useGetData(routeForData, {
-    headers: {
-      access_token: `BMToken ${localStorage.getItem('token')}`,
-    },
-  });
+  const {data, isSuccess, refetch} = useGetData(routeForData);
 
   const {mutateAsync} = useDeleteData('news');
   const [visible, setVisible] = useState(false);

@@ -14,10 +14,10 @@ export const usePostData = (key) => {
     async (dataPOST) => {
       const res = await axios({
         headers: {
-          access_token: 'BMToken ' + localStorage.getItem('token'),
+          Authorization: 'BMToken ' + localStorage.getItem('token'),
         },
         method: 'post',
-        url: `http://167.71.60.204:9000/api/${key}`,
+        url: `https://buxoromaktabi.uz/api/${key}`,
         data: dataPOST,
       });
       return res.data;

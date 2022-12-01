@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {Editor} from 'react-draft-wysiwyg';
-import {EditorState} from 'draft-js';
+import {EditorState, ContentState, convertFromHTML} from 'draft-js';
 import {Controller} from 'react-hook-form';
 import PropTypes from 'prop-types';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-// import draftToHtml from 'draftjs-to-html';
+import draftToHtml from 'draftjs-to-html';
 // import DraftDefaultConfig from './config';
-import './styles.module.scss';
+import './style.scss';
 import {usePostData} from 'hooks';
 
 function RichTextEditor({
@@ -18,15 +18,17 @@ function RichTextEditor({
   defaultValue = null,
   ...others
 }) {
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  // const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
-  // const [editorState, setEditorState] = useState(() =>
-  //   defaultValue
-  //     ? EditorState.createWithContent(
-  //         ContentState.createFromBlockArray(convertFromHTML(draftToHtml(data))),
-  //       )
-  //     : EditorState.createEmpty(),
-  // );
+  const [editorState, setEditorState] = useState(() =>
+    defaultValue
+      ? EditorState.createWithContent(
+          ContentState.createFromBlockArray(
+            convertFromHTML(draftToHtml(EditorState.createEmpty())),
+          ),
+        )
+      : EditorState.createEmpty(),
+  );
 
   const {mutateAsync} = usePostData('files');
 
@@ -77,7 +79,7 @@ function RichTextEditor({
                 // editorClassName={styles.editor}
                 onEditorStateChange={setEditorState}
                 onChange={(e) => {
-                  console.log(e, 'eeeeeee');
+                  console.log(draftToHtml(e), 'eeeeeee');
                 }}
                 placeholder={placeholder}
                 editorStyle={{maxHeight: '320px'}}
