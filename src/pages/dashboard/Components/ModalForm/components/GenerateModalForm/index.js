@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, memo} from 'react';
 import {Modal, Button} from 'antd';
 import {IoIosAddCircleOutline} from 'react-icons/io';
 import {useForm, useFieldArray} from 'react-hook-form';
@@ -6,6 +6,7 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import FormFields from '../ModalFields';
 import PropTypes from 'prop-types';
 import './styles.scss';
+import draftToHtml from 'draftjs-to-html';
 
 function GenerateModalForm({
   type,
@@ -80,11 +81,20 @@ function GenerateModalForm({
       }>
       <form
         onSubmit={handleSubmit((data) => {
+          data['create'].forEach((item) => {
+            if ('description' in item) {
+              for (const key in item['description']) {
+                item['description'][key] = draftToHtml(
+                  item['description'][key],
+                );
+              }
+            }
+          });
           onSubmit(data);
         })}
         className='create-modal-form-scrollbar'>
         <ul>
-          {fields.map((item, index) => (
+          {fields?.map((item, index) => (
             <li key={item.id} className='create-modal-form-box'>
               <FormFields
                 type={type}
@@ -92,7 +102,7 @@ function GenerateModalForm({
                 index={index}
                 remove={remove}
                 control={control}
-                error={errors.create?.[index]}
+                error={errors['create']?.[index]}
                 register={register}
                 initialValue={initialValue}
               />
@@ -105,7 +115,7 @@ function GenerateModalForm({
   );
 }
 
-export default GenerateModalForm;
+export default memo(GenerateModalForm);
 
 GenerateModalForm.propTypes = {
   type: PropTypes.string,

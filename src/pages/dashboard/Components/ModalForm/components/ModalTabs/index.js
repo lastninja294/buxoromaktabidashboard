@@ -31,7 +31,7 @@ function ModalTabs({
     }
     return isErr;
   };
-  console.log(error, 'error');
+  
   return (
     <>
       <Tabs
@@ -59,23 +59,20 @@ function ModalTabs({
       {languageTabs.map((lang, key) => {
         return (
           <div style={tab !== lang ? {display: 'none'} : null} key={key}>
-            {isMultiNameArr.map(({nameValue, type}, i) => {
-              console.log(type, nameValue, 'wuuuuuuuuuu', i);
-              return (
-                <FormElements
-                  key={i}
-                  type={'input'}
-                  control={control}
-                  index={index}
-                  error={error && error[nameValue]?.[lang]}
-                  name={`create[${index}].${nameValue}.${lang}`}
-                  register={register}
-                  defaultValue={initialValue[nameValue]?.[lang]}
-                  placeholder={nameValue}
-                  label={nameValue}
-                />
-              );
-            })}
+            {isMultiNameArr.map(({nameValue, type}, i) => (
+              <FormElements
+                key={i}
+                type={type}
+                control={control}
+                index={index}
+                error={error && error[nameValue]?.[lang]}
+                name={`create[${index}].${nameValue}.${lang}`}
+                register={register}
+                defaultValue={initialValue[nameValue]?.[lang]}
+                placeholder={nameValue}
+                label={nameValue}
+              />
+            ))}
           </div>
         );
       })}

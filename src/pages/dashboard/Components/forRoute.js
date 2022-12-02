@@ -2,12 +2,13 @@ import React from 'react';
 import {PaginationForTable} from './index';
 import * as yup from 'yup';
 import AppPageMetadata from '@crema/core/AppPageMetadata';
-import {useForm} from 'react-hook-form';
+// import {useForm} from 'react-hook-form';
 import ModalForm from './ModalForm';
-import FormElements from './FormElements';
-import RichTextEditor from './FormElements/RichTextEditor';
+// import FormElements from './FormElements';
+// import RichTextEditor from './FormElements/RichTextEditor';
 // import FormElements from './FormElements';
 import {DynamicTable} from './index';
+// import draftToHtml from 'draftjs-to-html';
 
 function Components() {
   const initialEditValue = {
@@ -16,15 +17,14 @@ function Components() {
       Ru: 'title ru',
     },
     description: {
-      Uz: '',
-      Ru: '',
+      Uz: '<p>erkin uz</p>',
+      Ru: '<p>erkin ru</p>',
     },
     name: {
       Uz: 'string uz',
       Ru: 'string ru',
     },
     address: 'Beruniy Metro',
-    category: '9db1a4bb-5df8-4f9d-a712-c6b80c5294c2',
     email: 'erkin@gmail.com',
     phone: '+(998) 94 924 2319',
     photo: [
@@ -50,6 +50,10 @@ function Components() {
     },
     age: '',
     gender: '',
+    address: '',
+    email: '',
+    phone: '',
+    photo: [],
   };
 
   const schema1 = yup.object().shape({
@@ -60,11 +64,19 @@ function Components() {
           Ru: yup.string().required("*Ru Maydon to'ldirilishi kerak"),
         }),
         description: yup.object().shape({
-          Uz: yup.string().required("*En Maydon to'ldirilishi kerak"),
-          Ru: yup.string().required("*Ru Maydon to'ldirilishi kerak"),
+          Uz: yup.object(),
+          Ru: yup.object(),
         }),
         age: yup.string().required("*Maydon to'ldirilishi kerak"),
         gender: yup.string().required("*Maydon to'ldirilishi kerak"),
+        email: yup
+          .string()
+          .email('Must be a valid email')
+          .max(255)
+          .required('Email is required'),
+        address: yup.string().required("*Maydon to'ldirilishi kerak"),
+        phone: yup.string().required("*Maydon to'ldirilishi kerak"),
+        photo: yup.array().nullable(),
       }),
     ),
   });
@@ -78,8 +90,8 @@ function Components() {
           Ru: yup.string().required("*Ru Maydon to'ldirilishi kerak"),
         }),
         description: yup.object().shape({
-          Uz: yup.string().required("*En Maydon to'ldirilishi kerak"),
-          Ru: yup.string().required("*Ru Maydon to'ldirilishi kerak"),
+          Uz: yup.object(),
+          Ru: yup.object(),
         }),
         name: yup.object().shape({
           Uz: yup.string().required("*En Maydon to'ldirilishi kerak"),
@@ -91,24 +103,15 @@ function Components() {
           .max(255)
           .required('Email is required'),
         address: yup.string().required("*Maydon to'ldirilishi kerak"),
-        category: yup.string(),
         phone: yup.string().required("*Maydon to'ldirilishi kerak"),
         photo: yup.array().nullable(),
       }),
     ),
   });
   // handle submit
-  // const handleSubmit = (data) => {
-  //   console.log('submit', data);
-  // };
-
-  // test
-  const {
-    handleSubmit,
-    control,
-    formState: {errors},
-  } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const handleSubmit = (data) => {
+    console.log('submit', data);
+  };
 
   return (
     <div
@@ -146,19 +149,6 @@ function Components() {
       {/* edit exemple */}
       <h4>Dynamic table</h4>
       <DynamicTable routeForData={'teachers/all'} />
-
-      {/* test */}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <RichTextEditor name='description' errors={errors} control={control} />
-        <FormElements
-          type={'input'}
-          name='name'
-          errors={errors}
-          control={control}
-        />
-        <button>Submit</button>
-      </form>
-      {/* test */}
     </div>
   );
 }

@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {Editor} from 'react-draft-wysiwyg';
 import {EditorState, ContentState, convertFromHTML} from 'draft-js';
 import {Controller} from 'react-hook-form';
 import PropTypes from 'prop-types';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import draftToHtml from 'draftjs-to-html';
 // import DraftDefaultConfig from './config';
 import './style.scss';
 import {usePostData} from 'hooks';
@@ -15,17 +14,14 @@ function RichTextEditor({
   placeholder,
   error,
   name,
-  defaultValue = null,
+  defaultValue = '',
   ...others
 }) {
-  // const [editorState, setEditorState] = useState(EditorState.createEmpty());
-
+  const editorRef = useRef();
   const [editorState, setEditorState] = useState(() =>
     defaultValue
       ? EditorState.createWithContent(
-          ContentState.createFromBlockArray(
-            convertFromHTML(draftToHtml(EditorState.createEmpty())),
-          ),
+          ContentState.createFromBlockArray(convertFromHTML(defaultValue)),
         )
       : EditorState.createEmpty(),
   );
@@ -57,85 +53,91 @@ function RichTextEditor({
     });
   }
 
+  useEffect(() => {
+    console.log(editorRef);
+    // editorRef.current.focusEditor();
+  }, []);
+
   return (
     <>
       <Controller
         control={control}
         name={name}
-        defaultValue={defaultValue}
-        render={({field}) => (
-          <div>
-            <label
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                margin: '10px 0 0 0',
-              }}>
-              {label}
-              <Editor
-                {...field}
-                toolbarOnHidden
-                editorState={editorState}
-                // editorClassName={styles.editor}
-                onEditorStateChange={setEditorState}
-                onChange={(e) => {
-                  console.log(draftToHtml(e), 'eeeeeee');
-                }}
-                placeholder={placeholder}
-                editorStyle={{maxHeight: '320px'}}
-                toolbar={{
-                  options: [
-                    'inline',
-                    'blockType',
-                    'fontSize',
-                    'fontFamily',
-                    'list',
-                    'textAlign',
-                    'image',
-                    'history',
-                  ],
-                  inline: {
-                    inDropdown: false,
+        defaultValue={editorState}
+        render={({field}) => {
+          return (
+            <div className='create-modal-form-box'>
+              <label
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  margin: '10px 0 0 0',
+                }}>
+                {label}
+                <Editor
+                  {...field}
+                  ref={editorRef}
+                  toolbarOnHidden
+                  editorState={editorState}
+                  onEditorStateChange={(e) => {
+                    setEditorState(e);
+                  }}
+                  placeholder={placeholder}
+                  editorStyle={{maxHeight: '320px'}}
+                  toolbar={{
                     options: [
-                      'bold',
-                      'italic',
-                      'underline',
-                      'strikethrough',
-                      'superscript',
-                      'subscript',
+                      'inline',
+                      'blockType',
+                      'fontSize',
+                      'fontFamily',
+                      'list',
+                      'textAlign',
+                      'image',
+                      'history',
                     ],
-                  },
-                  blockType: {
-                    inDropdown: true,
-                    options: [
-                      'Normal',
-                      'H1',
-                      'H2',
-                      'H3',
-                      'H4',
-                      'H5',
-                      'H6',
-                      'Blockquote',
-                    ],
-                    className: undefined,
-                    component: undefined,
-                    dropdownClassName: undefined,
-                  },
-
-                  image: {
-                    uploadCallback: uploadImageCallBack,
-                    alt: {present: false, mandatory: false},
-                    defaultSize: {
-                      height: 'auto',
-                      width: 'auto',
+                    inline: {
+                      inDropdown: false,
+                      options: [
+                        'bold',
+                        'italic',
+                        'underline',
+                        'strikethrough',
+                        'superscript',
+                        'subscript',
+                      ],
                     },
-                    previewImage: true,
-                  },
-                }}
-              />
-            </label>
-          </div>
-        )}
+                    blockType: {
+                      inDropdown: true,
+                      options: [
+                        'Normal',
+                        'H1',
+                        'H2',
+                        'H3',
+                        'H4',
+                        'H5',
+                        'H6',
+                        'Blockquote',
+                      ],
+                      className: undefined,
+                      component: undefined,
+                      dropdownClassName: undefined,
+                    },
+
+                    image: {
+                      uploadCallback: uploadImageCallBack,
+                      alt: {present: false, mandatory: false},
+                      defaultSize: {
+                        height: 'auto',
+                        width: 'auto',
+                      },
+                      previewImage: true,
+                    },
+                  }}
+                />
+              </label>
+            </div>
+          );
+        }}
         {...others}
       />
       {error && (
