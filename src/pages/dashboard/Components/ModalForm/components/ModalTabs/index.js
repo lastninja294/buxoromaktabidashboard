@@ -38,7 +38,7 @@ function ModalTabs({
         defaultActiveKey={languageTabs[0]}
         activeKey={tab}
         onChange={callback}>
-        {languageTabs.map((item) => (
+        {languageTabs?.map((item) => (
           <TabPane
             tab={
               <span>
@@ -56,10 +56,10 @@ function ModalTabs({
         ))}
       </Tabs>
 
-      {languageTabs.map((lang, key) => {
+      {languageTabs?.map((lang, key) => {
         return (
           <div style={tab !== lang ? {display: 'none'} : null} key={key}>
-            {isMultiNameArr.map(({nameValue, type}, i) => (
+            {isMultiNameArr?.map(({nameValue, type}, i) => (
               <FormElements
                 key={i}
                 type={type}

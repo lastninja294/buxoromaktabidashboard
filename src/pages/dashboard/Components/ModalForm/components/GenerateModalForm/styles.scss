@@ -7,31 +7,25 @@
 
 .create-modal-form-scrollbar {
   overflow-y: auto;
-  max-height: 75vh;
+  max-height: 60vh;
   padding: 0 24px;
 }
 .create-modal-form-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  .create-modal-form-footer-item {
-    width: 100%;
-    align-self: flex-end;
-  }
 }
 .create-modal-form-add-btn {
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
-.create-modal-form-boxs {
-  .ant-modal-body {
-    padding: 0;
-  }
-}
+
 .create-modal-form-action-btn {
   width: 100%;
-  align-self: flex-end;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 }
 .create-modal-form-box {
   @include borderBox();

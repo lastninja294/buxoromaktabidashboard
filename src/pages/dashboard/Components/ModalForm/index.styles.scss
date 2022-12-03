@@ -13,6 +13,7 @@
   align-items: center;
 }
 .create-modal-box {
+  position: relative;
   .ant-modal-body {
     padding: 0;
   }
@@ -21,3 +22,4 @@
   width: 100%;
   align-self: flex-end;
 }
+

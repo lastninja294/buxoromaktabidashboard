@@ -61,7 +61,7 @@ const FormFields = ({
         />
       ) : null}
 
-      {isNameArr.map(({type, nameValue}, key) => (
+      {isNameArr?.map(({type, nameValue}, key) => (
         <FormElements
           key={key}
           type={type}

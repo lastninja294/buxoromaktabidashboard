@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState} from 'react';
 import {Editor} from 'react-draft-wysiwyg';
 import {EditorState, ContentState, convertFromHTML} from 'draft-js';
 import {Controller} from 'react-hook-form';
@@ -17,7 +17,6 @@ function RichTextEditor({
   defaultValue = '',
   ...others
 }) {
-  const editorRef = useRef();
   const [editorState, setEditorState] = useState(() =>
     defaultValue
       ? EditorState.createWithContent(
@@ -53,18 +52,14 @@ function RichTextEditor({
     });
   }
 
-  useEffect(() => {
-    console.log(editorRef);
-    // editorRef.current.focusEditor();
-  }, []);
-
   return (
     <>
       <Controller
         control={control}
         name={name}
         defaultValue={editorState}
-        render={({field}) => {
+        render={({field: {ref, ...others}}) => {
+          console.log(ref, 'ref');
           return (
             <div className='create-modal-form-box'>
               <label
@@ -75,8 +70,7 @@ function RichTextEditor({
                 }}>
                 {label}
                 <Editor
-                  {...field}
-                  ref={editorRef}
+                  {...others}
                   toolbarOnHidden
                   editorState={editorState}
                   onEditorStateChange={(e) => {
@@ -122,7 +116,6 @@ function RichTextEditor({
                       component: undefined,
                       dropdownClassName: undefined,
                     },
-
                     image: {
                       uploadCallback: uploadImageCallBack,
                       alt: {present: false, mandatory: false},

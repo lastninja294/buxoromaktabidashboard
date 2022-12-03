@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {PaginationForTable} from './index';
 import * as yup from 'yup';
 import AppPageMetadata from '@crema/core/AppPageMetadata';
@@ -10,7 +10,12 @@ import ModalForm from './ModalForm';
 import {DynamicTable} from './index';
 // import draftToHtml from 'draftjs-to-html';
 
+import {useForm} from 'react-hook-form';
+import RichTextEditor from './FormElements/RichTextEditor';
+import {Modal} from 'antd';
+
 function Components() {
+  const [visible, setvisible] = useState(false);
   const initialEditValue = {
     title: {
       Uz: 'title uz',
@@ -109,9 +114,12 @@ function Components() {
     ),
   });
   // handle submit
-  const handleSubmit = (data) => {
+  const handleSubmit1 = (data) => {
     console.log('submit', data);
   };
+
+  const {control, handleSubmit} = useForm({});
+  const onSubmit = (data) => console.log(data);
 
   return (
     <div
@@ -123,6 +131,30 @@ function Components() {
       }}>
       <AppPageMetadata title='Components' />
       <h4>RichTextEditor</h4>
+      <button
+        onClick={() => {
+          setvisible(true);
+        }}>
+        open
+      </button>
+      <Modal
+        visible={visible}
+        centered={true}
+        title={'Edit Modal'}
+        cancelText='Cancel'
+        onCancel={() => {
+          setvisible(false);
+        }}
+        className='create-modal-form-boxs'>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <RichTextEditor name='firstName' control={control} />
+          <button>submit</button>
+        </form>
+      </Modal>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <RichTextEditor name='firstName' control={control} />
+        <button>submit</button>
+      </form>
       {/* <FormElements type='editor' /> */}
       <h4>Pagination</h4>
       <PaginationForTable total={100} />
@@ -132,7 +164,7 @@ function Components() {
         type='create'
         initialValue={initialCreateValue}
         schema={schema1}
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit1}
         isLoading={false}
       />
       {/* create exemple */}
@@ -143,7 +175,7 @@ function Components() {
         type='edit'
         initialValue={initialEditValue}
         schema={schema}
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit1}
         isLoading={false}
       />
       {/* edit exemple */}

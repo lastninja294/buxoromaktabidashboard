@@ -1,12 +1,13 @@
 import React, {useEffect, useRef, memo} from 'react';
-import {Modal, Button} from 'antd';
+import {Button} from 'antd';
 import {IoIosAddCircleOutline} from 'react-icons/io';
 import {useForm, useFieldArray} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import FormFields from '../ModalFields';
 import PropTypes from 'prop-types';
-import './styles.scss';
 import draftToHtml from 'draftjs-to-html';
+import CustomModal from '../CustomModal';
+import './styles.scss';
 
 function GenerateModalForm({
   type,
@@ -44,74 +45,73 @@ function GenerateModalForm({
   }, []);
 
   return (
-    <Modal
-      visible={visible}
-      centered={true}
-      title={type == 'create' ? 'Create Modal' : 'Edit Modal'}
-      cancelText='Cancel'
-      onCancel={onCancel}
-      className='create-modal-form-boxs'
-      width={1000}
-      footer={
-        <div className='create-modal-form-footer'>
-          {type === 'create' ? (
-            <Button
-              type='link'
-              onClick={() => append(initialValue)}
-              className='create-modal-form-add-btn'>
-              <IoIosAddCircleOutline
-                style={{fontSize: '1.2em', marginRight: '4px'}}
-              />
-              Add field
-            </Button>
-          ) : null}
-          <div className='create-modal-form-action-btn'>
-            <Button key='back' onClick={handleCancel}>
-              Cancel
-            </Button>
-            <Button
-              key='submit'
-              type='primary'
-              loading={isLoading}
-              onClick={handleOk}>
-              Submit
-            </Button>
+    <div className='generate-modal-form'>
+      <CustomModal
+        visible={visible}
+        title={type === 'create' ? 'Create Modal' : 'Edit Modal'}
+        onCancel={onCancel}
+        width={1000}
+        footer={
+          <div className='create-modal-form-footer'>
+            {type === 'create' ? (
+              <Button
+                type='link'
+                onClick={() => append(initialValue)}
+                className='create-modal-form-add-btn'>
+                <IoIosAddCircleOutline
+                  style={{fontSize: '1.2em', marginRight: '4px'}}
+                />
+                Add field
+              </Button>
+            ) : null}
+            <div className='create-modal-form-action-btn'>
+              <Button key='back' onClick={handleCancel}>
+                Cancel
+              </Button>
+              <Button
+                key='submit'
+                type='primary'
+                loading={isLoading}
+                onClick={handleOk}>
+                Submit
+              </Button>
+            </div>
           </div>
-        </div>
-      }>
-      <form
-        onSubmit={handleSubmit((data) => {
-          data['create'].forEach((item) => {
-            if ('description' in item) {
-              for (const key in item['description']) {
-                item['description'][key] = draftToHtml(
-                  item['description'][key],
-                );
+        }>
+        <form
+          onSubmit={handleSubmit((data) => {
+            data['create'].forEach((item) => {
+              if ('description' in item) {
+                for (const key in item['description']) {
+                  item['description'][key] = draftToHtml(
+                    item['description'][key],
+                  );
+                }
               }
-            }
-          });
-          onSubmit(data);
-        })}
-        className='create-modal-form-scrollbar'>
-        <ul>
-          {fields?.map((item, index) => (
-            <li key={item.id} className='create-modal-form-box'>
-              <FormFields
-                type={type}
-                item={item}
-                index={index}
-                remove={remove}
-                control={control}
-                error={errors['create']?.[index]}
-                register={register}
-                initialValue={initialValue}
-              />
-            </li>
-          ))}
-        </ul>
-        <input type='submit' hidden={true} ref={refFrom} />
-      </form>
-    </Modal>
+            });
+            onSubmit(data);
+          })}
+          className='create-modal-form-scrollbar'>
+          <ul>
+            {fields?.map((item, index) => (
+              <li key={item.id} className='create-modal-form-box'>
+                <FormFields
+                  type={type}
+                  item={item}
+                  index={index}
+                  remove={remove}
+                  control={control}
+                  error={errors['create']?.[index]}
+                  register={register}
+                  initialValue={initialValue}
+                />
+              </li>
+            ))}
+          </ul>
+          <input type='submit' hidden={true} ref={refFrom} />
+        </form>
+      </CustomModal>
+    </div>
   );
 }
 
