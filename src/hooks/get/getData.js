@@ -23,10 +23,10 @@ export const useGetData = (key) => {
         openNotificationWithIcon('error');
       },
       onSuccess: () => {
-        console.log('success!!');
+        return 'success!!';
       },
       onSettled: () => {
-        console.log('settled!!');
+        return 'settled!!';
       },
     },
   );

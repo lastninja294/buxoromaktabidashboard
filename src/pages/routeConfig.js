@@ -1,10 +1,6 @@
 import React from 'react';
 import {GiTeacher} from 'react-icons/gi';
-import {
-  MdOutlinePlayLesson,
-  MdOutlineManageAccounts,
-  MdPlaylistAddCheck,
-} from 'react-icons/md';
+import {MdOutlinePlayLesson, MdPlaylistAddCheck} from 'react-icons/md';
 import {IoNewspaperOutline} from 'react-icons/io5';
 import {AiOutlineLineChart} from 'react-icons/ai';
 import {VscTools} from 'react-icons/vsc';
@@ -73,22 +69,6 @@ const routesConfig = [
         type: 'item',
         icon: <VscTools />,
         path: '/dashboard/components',
-      },
-    ],
-  },
-  {
-    id: 'extra-pages',
-    title: 'Extra Pages',
-    messageId: 'sidebar.pages.extraPages',
-    path: 'extra-pages',
-    type: 'group',
-    children: [
-      {
-        id: 'account',
-        title: 'Account',
-        messageId: 'sidebar.pages.extraPages.account',
-        icon: <MdOutlineManageAccounts />,
-        path: '/extra-pages/user-profile',
       },
     ],
   },

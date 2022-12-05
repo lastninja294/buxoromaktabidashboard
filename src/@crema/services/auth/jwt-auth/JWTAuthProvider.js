@@ -37,6 +37,17 @@ const JWTAuthAuthProvider = ({children}) => {
           isAuthenticated: false,
         });
         return;
+      } else if (
+        token &&
+        (new Date().getTime() - localStorage.getItem('asdfg')) / 1000 < 60 * 60
+      ) {
+        setJWTAuthData({
+          user: {
+            admin_name: 'admin',
+            admin_role: 'superadmin',
+          },
+          isAuthenticated: true,
+        });
       }
       setAuthToken(token);
     };
@@ -70,7 +81,9 @@ const JWTAuthAuthProvider = ({children}) => {
       password: password,
     })
       .then((e) => {
+        const date = new Date().getTime();
         localStorage.setItem('token', e.token);
+        localStorage.setItem('asdfg', date);
         setAuthToken(e.token);
         setJWTAuthData({user: e.data, isAuthenticated: true, isLoading: false});
         dispatch({type: FETCH_SUCCESS});

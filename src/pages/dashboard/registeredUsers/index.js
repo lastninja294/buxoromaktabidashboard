@@ -6,8 +6,8 @@ const RegisteredUsers = () => {
   return (
     <>
       <AppPageMetadata title='News' />
-      <h2>Registered Users page</h2>
-      <DynamicTable routeForData={'users/all'} />
+      <h2>{"Ro'yhatdan o'tgan foydalanuvchilar"}</h2>
+      <DynamicTable routeForData={'users'} deleteKey='users' />
     </>
   );
 };

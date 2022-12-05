@@ -1,12 +1,9 @@
-import {Button} from 'antd';
-import {IoIosRemoveCircleOutline} from 'react-icons/io';
 import ModalTabs from '../ModalTabs';
 import PropTypes from 'prop-types';
 import FormElements from 'pages/dashboard/Components/FormElements';
 import './styles.scss';
 
 const FormFields = ({
-  type,
   remove,
   register,
   error,
@@ -14,6 +11,7 @@ const FormFields = ({
   index,
   initialValue,
 }) => {
+  let isMultiLanguage = false;
   const isNameValue = () => {
     let isValue = [];
     let isMultiValues = [];
@@ -23,8 +21,9 @@ const FormFields = ({
         'Uz' in initialValue[key] &&
         'Ru' in initialValue[key]
       ) {
+        isMultiLanguage = true;
         let pushValue = {
-          type: key === 'description' ? 'editor' : 'input',
+          type: 'editor',
           nameValue: key,
         };
         isMultiValues.push(pushValue);
@@ -33,8 +32,10 @@ const FormFields = ({
           type:
             key === 'phone'
               ? 'phone'
-              : key === 'image' || key === 'video' || key === 'photo'
+              : key.indexOf('img') === 0
               ? 'upload'
+              : key === 'teacherId'
+              ? 'select'
               : 'input',
           nameValue: key,
         };
@@ -51,7 +52,7 @@ const FormFields = ({
       {isMultiNameArr ? (
         <ModalTabs
           isMultiNameArr={isMultiNameArr}
-          languageTabs={['Uz', 'Ru']}
+          languageTabs={isMultiLanguage ? ['Uz', 'Ru'] : ['Uz']}
           remove={remove}
           register={register}
           error={error}
@@ -75,19 +76,6 @@ const FormFields = ({
           label={nameValue}
         />
       ))}
-
-      {type == 'create' ? (
-        <Button
-          type='link'
-          danger
-          onClick={() => remove(index)}
-          className='create-modal-btn'>
-          <IoIosRemoveCircleOutline
-            style={{fontSize: '1.2em', marginRight: '4px'}}
-          />
-          Delete
-        </Button>
-      ) : null}
     </div>
   );
 };

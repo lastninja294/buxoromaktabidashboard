@@ -1,26 +1,26 @@
 import React from 'react';
-import {useHistory} from 'react-router-dom';
+// import {useHistory} from 'react-router-dom';
 import {useIntl} from 'react-intl';
-import {Button, Checkbox, Form, Input} from 'antd';
+import {Button, Form, Input} from 'antd';
 
 import IntlMessages from '../../../@crema/utility/IntlMessages';
 import {useAuthMethod} from '../../../@crema/utility/AuthHooks';
 
 const SignInJwtAuth = () => {
-  const history = useHistory();
+  // const history = useHistory();
   const {signInUser} = useAuthMethod();
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
 
-  const onGoToForgetPassword = () => {
-    history.push('/forget-password', {tab: 'jwtAuth'});
-  };
+  // const onGoToForgetPassword = () => {
+  //   history.push('/forget-password', {tab: 'jwtAuth'});
+  // };
 
-  function onRememberMe(e) {
-    console.log(`checked = ${e.target.checked}`);
-  }
+  // function onRememberMe(e) {
+  //   console.log(`checked = ${e.target.checked}`);
+  // }
 
   const {messages} = useIntl();
 
@@ -48,7 +48,7 @@ const SignInJwtAuth = () => {
             <Input.Password placeholder={messages['common.password']} />
           </Form.Item>
 
-          <div className='rememberMe'>
+          {/* <div className='rememberMe'>
             <Checkbox onChange={onRememberMe}>
               <IntlMessages id='common.rememberMe' />
             </Checkbox>
@@ -56,7 +56,7 @@ const SignInJwtAuth = () => {
             <span className='sign-link' onClick={onGoToForgetPassword}>
               <IntlMessages id='common.forgetPassword' />
             </span>
-          </div>
+          </div> */}
 
           <div className='form-btn-field'>
             <Button type='primary' htmlType='submit' className='sign-btn'>

@@ -14,6 +14,9 @@ import {useForm} from 'react-hook-form';
 import RichTextEditor from './FormElements/RichTextEditor';
 import {Modal} from 'antd';
 
+import generate from './Table/generate';
+import {usePostData} from 'hooks';
+
 function Components() {
   const [visible, setvisible] = useState(false);
   const initialEditValue = {
@@ -43,64 +46,68 @@ function Components() {
       },
     ],
   };
-  // exemple initialCreateValue
-  const initialCreateValue = {
-    name1: {
-      Uz: '',
-      Ru: '',
-    },
-    description: {
-      Uz: '',
-      Ru: '',
-    },
-    age: '',
-    gender: '',
-    address: '',
-    email: '',
-    phone: '',
-    photo: [],
-  };
 
-  const schema1 = yup.object().shape({
-    create: yup.array().of(
-      yup.object().shape({
-        name1: yup.object().shape({
-          Uz: yup.string().required("*En Maydon to'ldirilishi kerak"),
-          Ru: yup.string().required("*Ru Maydon to'ldirilishi kerak"),
-        }),
-        description: yup.object().shape({
-          Uz: yup.object(),
-          Ru: yup.object(),
-        }),
-        age: yup.string().required("*Maydon to'ldirilishi kerak"),
-        gender: yup.string().required("*Maydon to'ldirilishi kerak"),
-        email: yup
-          .string()
-          .email('Must be a valid email')
-          .max(255)
-          .required('Email is required'),
-        address: yup.string().required("*Maydon to'ldirilishi kerak"),
-        phone: yup.string().required("*Maydon to'ldirilishi kerak"),
-        photo: yup.array().nullable(),
-      }),
-    ),
-  });
+  const { mutateAsync } = usePostData('files');
+  
+  const { mutateAsync: mutateAsync1 } = usePostData('news');
+  // exemple initialCreateValue
+  // const initialCreateValue = {
+  //   name1: {
+  //     Uz: '',
+  //     Ru: '',
+  //   },
+  //   description: {
+  //     Uz: '',
+  //     Ru: '',
+  //   },
+  //   age: '',
+  //   gender: '',
+  //   address: '',
+  //   email: '',
+  //   phone: '',
+  //   photo: [],
+  // };
+
+  // const schema1 = yup.object().shape({
+  //   create: yup.array().of(
+  //     yup.object().shape({
+  //       name1: yup.object().shape({
+  //         Uz: yup.string().required("*En Maydon to'ldirilishi kerak"),
+  //         Ru: yup.string().required("*Ru Maydon to'ldirilishi kerak"),
+  //       }),
+  //       description: yup.object().shape({
+  //         Uz: yup.object(),
+  //         Ru: yup.object(),
+  //       }),
+  //       age: yup.string().required("*Maydon to'ldirilishi kerak"),
+  //       gender: yup.string().required("*Maydon to'ldirilishi kerak"),
+  //       email: yup
+  //         .string()
+  //         .email('Must be a valid email')
+  //         .max(255)
+  //         .required('Email is required'),
+  //       address: yup.string().required("*Maydon to'ldirilishi kerak"),
+  //       phone: yup.string().required("*Maydon to'ldirilishi kerak"),
+  //       photo: yup.array().nullable(),
+  //     }),
+  //   ),
+  // });
 
   // exemple schema
   const schema = yup.object().shape({
     create: yup.array().of(
       yup.object().shape({
         title: yup.object().shape({
-          Uz: yup.string().required("*En Maydon to'ldirilishi kerak"),
-          Ru: yup.string().required("*Ru Maydon to'ldirilishi kerak"),
+          Uz: yup.object().required("*En Maydon to'ldirilishi kerak"),
+          Ru: yup.object().required("*Ru Maydon to'ldirilishi kerak"),
         }),
         description: yup.object().shape({
           Uz: yup.object(),
           Ru: yup.object(),
         }),
         name: yup.object().shape({
-          Uz: yup.string().required("*En Maydon to'ldirilishi kerak"),
-          Ru: yup.string().required("*Ru Maydon to'ldirilishi kerak"),
+          Uz: yup.object().required("*En Maydon to'ldirilishi kerak"),
+          Ru: yup.object().required("*Ru Maydon to'ldirilishi kerak"),
         }),
         email: yup
           .string()
@@ -114,8 +121,28 @@ function Components() {
     ),
   });
   // handle submit
-  const handleSubmit1 = (data) => {
-    console.log('submit', data);
+  const handleSubmit1 = async (data) => {
+    const imgUpload = new FormData();
+    console.log('drtfvgybhj', data.create[0].data);
+    imgUpload.append('file', data.imgUrl[0]);
+
+    let url = '';
+    await mutateAsync(imgUpload)
+      .then((a) => {
+        url = a?.fileUrl;
+      })
+      .catch(() => {
+        url = '';
+      });
+    const uploadData = {
+      imgUrl: url,
+      data: JSON.stringify(data.create[0].data),
+    };
+
+    await mutateAsync1(uploadData).then(res => {
+      console.log(res);
+    }).catch(err=>console.log(err))
+    console.log(uploadData);
   };
 
   const {control, handleSubmit} = useForm({});
@@ -162,8 +189,8 @@ function Components() {
       {/* create exemple */}
       <ModalForm
         type='create'
-        initialValue={initialCreateValue}
-        schema={schema1}
+        initialValue={generate('news')[0]}
+        schema={generate('news')[1]}
         onSubmit={handleSubmit1}
         isLoading={false}
       />
@@ -180,7 +207,7 @@ function Components() {
       />
       {/* edit exemple */}
       <h4>Dynamic table</h4>
-      <DynamicTable routeForData={'teachers/all'} />
+      <DynamicTable routeForData={'teachers'} deleteKey={"teachers"} />
     </div>
   );
 }

@@ -13,6 +13,7 @@ function ModalForm({type, ...others}) {
       {type === 'create' ? (
         <Button
           type='primary'
+          style={{width: '140px', maxWidth: '50%'}}
           onClick={() => {
             setVisible(true);
           }}>

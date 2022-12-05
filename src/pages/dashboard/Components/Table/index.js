@@ -3,13 +3,23 @@ import {useGetData, useDeleteData} from 'hooks';
 import {Table, Image, Tag, message, Space, Popconfirm} from 'antd';
 import {BsImage} from 'react-icons/bs';
 import {AiOutlineDelete, AiOutlineEdit} from 'react-icons/ai';
+import PaginationForTable from '../Pagination';
+import {useHistory} from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 
-const DynamicTable = ({routeForData}) => {
-  const {data, isSuccess, refetch} = useGetData(routeForData);
+const DynamicTable = ({routeForData, deleteKey}) => {
+  const history = useHistory();
 
-  const {mutateAsync} = useDeleteData('news');
+  const {data, isSuccess, refetch} = useGetData(
+    `${routeForData}/${
+      history.location.search.split('?')[1]
+        ? history.location.search.split('?')[1]
+        : 'page=1&size=10'
+    }`,
+  );
+
+  const {mutateAsync} = useDeleteData(deleteKey);
   const [visible, setVisible] = useState(false);
   const [tableLoading, setTableLoading] = useState(false);
   const [imageSrc, setImageSrc] = useState('');
@@ -22,11 +32,12 @@ const DynamicTable = ({routeForData}) => {
         if (!(e.split('_').filter((element) => element === 'id').length > 0)) {
           if (e.split('_').filter((elem) => elem === 'img').length > 0) {
             return {
-              title: e.split('_').join(' '),
+              title: 'Img',
               dataIndex: e,
               key: 'img',
               ellipse: true,
-              width: 150,
+              width: 50,
+              align: 'center',
               render: (text) => {
                 return (
                   <>
@@ -66,78 +77,127 @@ const DynamicTable = ({routeForData}) => {
             key: e,
             width: 150,
             forSort: 0,
+            ellipsis: true,
           };
         }
       })
       .filter((e) => e)
       .sort((a, b) => a.forSort - b.forSort);
-    columns.push({
-      title: 'Actions',
-      key: 'actions',
-      width: 120,
-      fixed: 'right',
-      render: (record) => {
-        return (
-          <>
-            <Space size={'middle'} direction='horizontal' align='center'>
-              <AiOutlineEdit
-                size={28}
-                style={{
-                  border: '1px solid #000',
-                  padding: '4px',
-                  cursor: 'pointer',
-                }}
-              />
-              <Popconfirm
-                title={`Haqiqatdan ham o'chirishni xohlaysizmi?`}
-                onConfirm={async () => {
-                  setTableLoading(true);
-                  mutateAsync({
-                    id: record[
-                      Object.keys(record).find((e) => {
-                        return e.includes('_id');
-                      })
-                    ],
-                  }).then(() => {
-                    message.success("Muvaffaqiyatli o'chirildi");
-                    setTableLoading(false);
-                    refetch();
-                  });
-                }}
-                okText='Xa'
-                cancelText={`Yo'q`}>
-                <AiOutlineDelete
+    if (deleteKey !== 'users') {
+      columns.push({
+        title: 'Actions',
+        key: 'actions',
+        width: 120,
+        fixed: 'right',
+        render: (record) => {
+          return (
+            <>
+              <Space size={'middle'} direction='horizontal' align='center'>
+                <AiOutlineEdit
                   size={28}
                   style={{
                     padding: '4px',
                     cursor: 'pointer',
                   }}
-                  color='#e91e63'
                 />
-              </Popconfirm>
-            </Space>
-          </>
-        );
-      },
-    });
+                <Popconfirm
+                  title={`Haqiqatdan ham o'chirishni xohlaysizmi?`}
+                  onConfirm={async () => {
+                    setTableLoading(true);
+                    mutateAsync({
+                      id: record[
+                        Object.keys(record).find((e) => {
+                          return e.includes('_id');
+                        })
+                      ],
+                    }).then(() => {
+                      message.success("Muvaffaqiyatli o'chirildi");
+                      setTableLoading(false);
+                      refetch();
+                    });
+                  }}
+                  okText='Xa'
+                  cancelText={`Yo'q`}>
+                  <AiOutlineDelete
+                    size={28}
+                    style={{
+                      padding: '4px',
+                      cursor: 'pointer',
+                    }}
+                    color='#e91e63'
+                  />
+                </Popconfirm>
+              </Space>
+            </>
+          );
+        },
+      });
+    } else {
+      columns.push({
+        title: 'Actions',
+        key: 'actions',
+        width: 30,
+        fixed: 'right',
+        align: 'center',
+        render: (record) => {
+          return (
+            <>
+              <Space size={'middle'} direction='horizontal' align='center'>
+                <Popconfirm
+                  title={`Haqiqatdan ham o'chirishni xohlaysizmi?`}
+                  onConfirm={async () => {
+                    setTableLoading(true);
+                    mutateAsync({
+                      id: record[
+                        Object.keys(record).find((e) => {
+                          return e.includes('_id');
+                        })
+                      ],
+                    }).then(() => {
+                      message.success("Muvaffaqiyatli o'chirildi");
+                      setTableLoading(false);
+                      refetch();
+                    });
+                  }}
+                  okText='Xa'
+                  cancelText={`Yo'q`}>
+                  <AiOutlineDelete
+                    size={28}
+                    style={{
+                      padding: '4px',
+                      cursor: 'pointer',
+                    }}
+                    color='#e91e63'
+                  />
+                </Popconfirm>
+              </Space>
+            </>
+          );
+        },
+      });
+    }
   }
 
   return (
     <div>
       {isSuccess ? (
-        <Table
-          bordered
-          rowKey={(record) => {
-            return record[Object.keys(record)[0]];
-          }}
-          columns={columns}
-          dataSource={data?.data?.data}
-          loading={tableLoading}
-          scroll={{
-            y: 400,
-          }}
-          ellipse={true}
-        />
+        <Space size={'middle'} direction='vertical'>
+          <Table
+            bordered
+            rowKey={(record) => {
+              return record[Object.keys(record)[0]];
+            }}
+            columns={columns}
+            dataSource={data?.data?.data}
+            loading={tableLoading}
+            scroll={{
+              y: 400,
+            }}
+            ellipse={true}
+            pagination={false}
+          />
+          <PaginationForTable total={data?.data?.size || 100} />
+        </Space>
       ) : (
         'Loading'
       )}
@@ -168,4 +228,5 @@ export default DynamicTable;
 
 DynamicTable.propTypes = {
   routeForData: PropTypes.string,
+  deleteKey: PropTypes.string,
 };

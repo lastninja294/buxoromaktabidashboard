@@ -52,6 +52,10 @@ function RichTextEditor({
     });
   }
 
+  function beztolk(ref) {
+    return ref;
+  }
+
   return (
     <>
       <Controller
@@ -59,7 +63,7 @@ function RichTextEditor({
         name={name}
         defaultValue={editorState}
         render={({field: {ref, ...others}}) => {
-          console.log(ref, 'ref');
+          beztolk(ref);
           return (
             <div className='create-modal-form-box'>
               <label

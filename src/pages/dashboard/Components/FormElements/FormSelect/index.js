@@ -1,8 +1,7 @@
 import {Select} from 'antd';
 import {Controller} from 'react-hook-form';
-import axios from 'axios';
-import {useQuery} from 'react-query';
 import PropTypes from 'prop-types';
+import {useGetData} from 'hooks';
 
 function FormSelect({
   control,
@@ -13,9 +12,7 @@ function FormSelect({
   label = 'category',
   ...others
 }) {
-  const getFunc = async () =>
-    axios.get('https://bariatrik.uz/api/news-category').then((res) => res.data);
-  const {data} = useQuery('select', getFunc);
+  const {data} = useGetData('teachers/all');
   const {Option} = Select;
   return (
     <>
@@ -36,9 +33,9 @@ function FormSelect({
                 {...field}
                 placeholder={placeholder}
                 defaultValue={defaultValue}>
-                {data?.data.map((item, index) => (
-                  <Option key={index} value={item.id}>
-                    {item.nameRu}
+                {data?.data?.data?.map((item, index) => (
+                  <Option key={index} value={item.teacher_id}>
+                    {item.teacher_name}
                   </Option>
                 ))}
               </Select>
