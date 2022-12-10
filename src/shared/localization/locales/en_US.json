@@ -667,6 +667,7 @@
   "sidebar.dashboard.registeredUsers": "Registered Users",
   "sidebar.dashboard.components": "Components",
   "sidebar.dashboard.admins": "Admins",
+  "sidebar.dashboard.comments": "Comments",
   "ecommerce.orderSummary": "Order Summary",
   "sidebar.ecommerce.checkout": "Checkout",
   "sidebar.ecommerce.confirmation": "Confirmation",

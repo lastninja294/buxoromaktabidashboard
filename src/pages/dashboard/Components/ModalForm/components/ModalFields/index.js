@@ -32,6 +32,8 @@ const FormFields = ({
           type:
             key === 'phone'
               ? 'phone'
+              : key === 'status'
+              ? 'switch'
               : key.indexOf('img') === 0
               ? 'upload'
               : key === 'teacherId'
@@ -52,7 +54,7 @@ const FormFields = ({
       {isMultiNameArr ? (
         <ModalTabs
           isMultiNameArr={isMultiNameArr}
-          languageTabs={isMultiLanguage ? ['Uz', 'Ru'] : ['Uz']}
+          languageTabs={isMultiLanguage ? ['Uz', 'Ru'] : []}
           remove={remove}
           register={register}
           error={error}

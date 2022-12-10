@@ -1,6 +1,7 @@
 import React from 'react';
 import {Redirect, Route} from 'react-router-dom';
 import {authRole, RoutePermittedLevel} from '../../shared/constants/AppEnums';
+import DeepClone from 'lodash/cloneDeep';
 
 import _extends from '@babel/runtime/helpers/esm/extends';
 
@@ -35,7 +36,7 @@ const generateRoutes = (structure) => {
 
   if (structure?.authorizedStructure) {
     if (userRole.length === 1) {
-      const clone = JSON.parse(JSON.stringify(authorizedStructure));
+      const clone = DeepClone(authorizedStructure);
       clone.routes = authorizedStructure.routes.filter(
         (e) => e.path !== '/dashboard/admins',
       );

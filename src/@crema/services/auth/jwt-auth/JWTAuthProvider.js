@@ -8,6 +8,7 @@ import {
 } from '../../../../shared/constants/ActionTypes';
 import {setAuthToken} from './jwt-api';
 import {usePostData} from 'hooks';
+import {sha512} from 'js-sha512';
 
 const JWTAuthContext = createContext();
 const JWTAuthActionsContext = createContext();
@@ -43,8 +44,11 @@ const JWTAuthAuthProvider = ({children}) => {
       ) {
         setJWTAuthData({
           user: {
-            admin_name: 'admin',
-            admin_role: 'superadmin',
+            admin_name: localStorage.getItem('name') || 'admin',
+            admin_role:
+              localStorage.getItem('token2') === sha512('admin')
+                ? 'admin'
+                : 'superadmin',
           },
           isAuthenticated: true,
         });
@@ -84,6 +88,8 @@ const JWTAuthAuthProvider = ({children}) => {
         const date = new Date().getTime();
         localStorage.setItem('token', e.token);
         localStorage.setItem('asdfg', date);
+        localStorage.setItem('token2', sha512(e.data.admin_role));
+        localStorage.setItem('name', e.data.admin_name);
         setAuthToken(e.token);
         setJWTAuthData({user: e.data, isAuthenticated: true, isLoading: false});
         dispatch({type: FETCH_SUCCESS});

@@ -1,11 +1,33 @@
 import React from 'react';
-import {Button, Col, Form, Input} from 'antd';
+import {Button, Col, Form, Input, message} from 'antd';
 import {AppRowContainer} from '../../../../@crema';
 import IntlMessages from '../../../../@crema/utility/IntlMessages';
+import {usePostData, usePutData} from 'hooks';
 
 const ChangePassword = () => {
-  const onFinish = (values) => {
-    console.log('Success:', values);
+  const {mutateAsync} = usePostData('admins/check');
+  const {mutateAsync: mutateAsync1} = usePutData('admins');
+
+  const [form] = Form.useForm();
+
+  const onFinish = async (values) => {
+    await mutateAsync({
+      password: values.oldPassword,
+    })
+      .then(() => {
+        mutateAsync1({
+          adminName: values.adminName,
+          password: values.password,
+        })
+          .then((res) => {
+            message.success(res.message);
+            form.resetFields();
+          })
+          .catch((err) => {
+            message.error(err.message);
+          });
+      })
+      .catch((err) => message.error(err.message));
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -24,6 +46,13 @@ const ChangePassword = () => {
       <AppRowContainer gutter={16}>
         <Col xs={24} md={16}>
           <Form.Item
+            name='adminName'
+            rules={[{required: false, message: 'Please input your new login'}]}>
+            <Input placeholder='Enter login' />
+          </Form.Item>
+        </Col>
+        <Col xs={24} md={16}>
+          <Form.Item
             name='oldPassword'
             rules={[
               {required: true, message: 'Please input your Enter Password'},
@@ -31,7 +60,6 @@ const ChangePassword = () => {
             <Input.Password placeholder='Enter password' />
           </Form.Item>
         </Col>
-        <Col xs={24} md={16} />
         <Col xs={24} md={16}>
           <Form.Item
             name='password'
@@ -65,7 +93,6 @@ const ChangePassword = () => {
             <Button type='primary' htmlType='submit'>
               Save Changes
             </Button>
-            <Button htmlType='cancel'>Cancel</Button>
           </Form.Item>
         </Col>
       </AppRowContainer>

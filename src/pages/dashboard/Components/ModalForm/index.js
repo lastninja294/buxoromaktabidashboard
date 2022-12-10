@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
 import GenerateModalForm from './components/GenerateModalForm';
-import {AiOutlineEdit} from 'react-icons/ai';
 import {Button} from 'antd';
 import PropTypes from 'prop-types';
 import './index.styles.scss';
 
-function ModalForm({type, ...others}) {
+function ModalForm({type, visibility, ...others}) {
   const [visible, setVisible] = useState(false);
 
   return (
@@ -19,20 +18,13 @@ function ModalForm({type, ...others}) {
           }}>
           Create
         </Button>
-      ) : (
-        <Button
-          type='link'
-          onClick={() => {
-            setVisible(true);
-          }}>
-          <AiOutlineEdit style={{fontSize: '1.3em'}} />
-        </Button>
-      )}
+      ) : null}
       <GenerateModalForm
-        visible={visible}
+        visible={visible || visibility?.[0]}
         type={type}
         onCancel={() => {
           setVisible(false);
+          visibility?.[1](false);
         }}
         {...others}
       />
@@ -44,4 +36,5 @@ export default ModalForm;
 
 ModalForm.propTypes = {
   type: PropTypes.string,
+  visibility: PropTypes.array,
 };

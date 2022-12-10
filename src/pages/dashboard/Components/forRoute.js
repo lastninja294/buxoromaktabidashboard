@@ -47,9 +47,9 @@ function Components() {
     ],
   };
 
-  const { mutateAsync } = usePostData('files');
-  
-  const { mutateAsync: mutateAsync1 } = usePostData('news');
+  const {mutateAsync} = usePostData('files');
+
+  const {mutateAsync: mutateAsync1} = usePostData('news');
   // exemple initialCreateValue
   // const initialCreateValue = {
   //   name1: {
@@ -139,9 +139,11 @@ function Components() {
       data: JSON.stringify(data.create[0].data),
     };
 
-    await mutateAsync1(uploadData).then(res => {
-      console.log(res);
-    }).catch(err=>console.log(err))
+    await mutateAsync1(uploadData)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
     console.log(uploadData);
   };
 
@@ -207,7 +209,7 @@ function Components() {
       />
       {/* edit exemple */}
       <h4>Dynamic table</h4>
-      <DynamicTable routeForData={'teachers'} deleteKey={"teachers"} />
+      <DynamicTable routeForData={'teachers'} deleteKey={'teachers'} />
     </div>
   );
 }

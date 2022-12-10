@@ -14,7 +14,6 @@ const AppsDeleteIcon = ({deleteAction}) => {
         title='Trash'
         icon={<AiOutlineDelete />}
         onClick={() => {
-          console.log('mai hu');
           setDeleteModalOpen(true);
         }}
       />

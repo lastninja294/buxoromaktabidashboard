@@ -16,8 +16,8 @@ export const usePutData = (key) => {
         headers: {
           Authorization: 'BMToken ' + localStorage.getItem('token'),
         },
-        method: 'put',
-        url: `https://buxoromaktabi.uz/${key}`,
+        method: 'PUT',
+        url: `https://buxoromaktabi.uz/api/${key}`,
         data: dataPUT,
       });
       return res.data;

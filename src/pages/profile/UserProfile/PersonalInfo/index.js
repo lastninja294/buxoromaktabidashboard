@@ -37,7 +37,6 @@ const PersonalInfo = () => {
             <Button type='primary' htmlType='submit'>
               Save Changes
             </Button>
-            <Button htmlType='cancel'>Cancel</Button>
           </Form.Item>
         </Col>
       </AppRowContainer>

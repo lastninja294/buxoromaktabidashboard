@@ -10,7 +10,7 @@ const Teachers = () => {
   const {mutateAsync} = usePostData('files');
   const {mutateAsync: mutateAsync1} = usePostData('teachers');
 
-  const handleSubmit = async (data) => {
+  const handleSubmit = async (data, reset) => {
     const newData = {...data.create[0]};
     newData.about = JSON.stringify(newData.about);
     console.log(newData);
@@ -26,13 +26,12 @@ const Teachers = () => {
         message.error("Rasm yuklanmadi qayta urinib ko'ring!");
       });
 
-    console.log('newwwww', newData);
-
     await mutateAsync1(newData)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
+        message.success("Ma'lumot qo'shildi");
+        reset();
       })
-      .catch((err) => console.log(err));
+      .catch(() => message.error('Xatolik mavjud'));
   };
 
   return (

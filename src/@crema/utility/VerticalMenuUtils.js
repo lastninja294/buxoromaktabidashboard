@@ -5,6 +5,7 @@ import routesConfig from '../../pages/routeConfig';
 import {useIntl} from 'react-intl';
 import {useSidebarContext} from './AppContextProvider/SidebarContextProvider';
 import {useAuthUser} from './AuthHooks';
+import DeepClone from 'lodash/cloneDeep';
 
 function getStyles(item, sidebarColorSet, isSidebarBgImage, index, isGroup) {
   const {pathname} = useLocation();
@@ -121,7 +122,7 @@ export const getRouteMenus = () => {
   const {isSidebarBgImage} = useSidebarContext();
   return routesConfig.map((route) => {
     if (user.role.length === 1) {
-      const routeClone = JSON.parse(JSON.stringify(route));
+      const routeClone = DeepClone(route);
       routeClone.children = routeClone.children.filter(
         (e) => e.title !== 'admins',
       );

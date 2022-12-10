@@ -2,10 +2,8 @@ import React from 'react';
 import {GiTeacher} from 'react-icons/gi';
 import {MdOutlinePlayLesson, MdPlaylistAddCheck} from 'react-icons/md';
 import {IoNewspaperOutline} from 'react-icons/io5';
-import {AiOutlineLineChart} from 'react-icons/ai';
-import {VscTools} from 'react-icons/vsc';
+import {AiOutlineLineChart, AiOutlineComment} from 'react-icons/ai';
 import {RiAdminLine} from 'react-icons/ri';
-// import {useAuthUser} from '@crema/utility/AuthHooks';
 
 const routesConfig = [
   {
@@ -55,20 +53,20 @@ const routesConfig = [
         path: '/dashboard/registeredUsers',
       },
       {
+        id: 'comments',
+        title: 'Comments',
+        messageId: 'sidebar.dashboard.comments',
+        type: 'item',
+        icon: <AiOutlineComment />,
+        path: '/dashboard/comments',
+      },
+      {
         id: 'Admins',
         title: 'admins',
         messageId: 'sidebar.dashboard.admins',
         type: 'super',
         icon: <RiAdminLine />,
         path: '/dashboard/admins',
-      },
-      {
-        id: 'components',
-        title: 'Components',
-        messageId: 'sidebar.dashboard.components',
-        type: 'item',
-        icon: <VscTools />,
-        path: '/dashboard/components',
       },
     ],
   },

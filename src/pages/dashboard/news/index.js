@@ -12,7 +12,6 @@ const News = () => {
 
   const handleSubmit = async (data, reset) => {
     const imgUpload = new FormData();
-    console.log('drtfvgybhj', data.create[0].data);
     imgUpload.append('file', data.imgUrl[0]);
 
     let url = '';

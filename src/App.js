@@ -12,7 +12,6 @@ import {
 import configureStore from './redux/store';
 import {BrowserRouter} from 'react-router-dom';
 import './@crema/services/index';
-// import FirebaseAuthProvider from './@crema/services/auth/firebase/FirebaseAuthProvider';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import {ReactQueryDevtools} from 'react-query/devtools';
 import JWTAuthAuthProvider from '@crema/services/auth/jwt-auth/JWTAuthProvider';

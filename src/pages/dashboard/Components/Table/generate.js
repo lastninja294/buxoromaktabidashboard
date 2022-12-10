@@ -25,7 +25,7 @@ function generateInitialValue(pageName) {
               Uz: yup.object(),
               Ru: yup.object(),
             }),
-            photo: yup.array().nullable(),
+            imgUrl: yup.array().nullable(),
           }),
         ),
       }),
@@ -112,6 +112,23 @@ function generateInitialValue(pageName) {
             university: yup.string().required("Maydon to'ldirilishi shart"),
             status: yup.string().required("Maydon to'ldirilishi shart"),
             points: yup.number().required("*Maydon to'ldirilishi kerak"),
+          }),
+        ),
+      }),
+    ];
+  } else if (pageName === 'comments') {
+    return [
+      {
+        name: '',
+        desc: '',
+        imgUrl: [],
+      },
+      yup.object().shape({
+        create: yup.array().of(
+          yup.object().shape({
+            name: yup.string().required("*Maydon to'ldirilishi kerak"),
+            desc: yup.string().required("*Maydon to'ldirilishi kerak"),
+            imgUrl: yup.array().nullable(),
           }),
         ),
       }),

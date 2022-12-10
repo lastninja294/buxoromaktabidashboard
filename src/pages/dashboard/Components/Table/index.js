@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useGetData, useDeleteData} from 'hooks';
+import {useGetData, useDeleteData, usePostData, usePutData} from 'hooks';
 import {Table, Image, Tag, message, Space, Popconfirm} from 'antd';
 import {BsImage} from 'react-icons/bs';
 import {AiOutlineDelete, AiOutlineEdit} from 'react-icons/ai';
@@ -7,6 +7,9 @@ import PaginationForTable from '../Pagination';
 import {useHistory} from 'react-router-dom';
 
 import PropTypes from 'prop-types';
+import generateEdit from './generateEdit';
+import ModalForm from '../ModalForm';
+import generate from './generate';
 
 const DynamicTable = ({routeForData, deleteKey}) => {
   const history = useHistory();
@@ -20,9 +23,15 @@ const DynamicTable = ({routeForData, deleteKey}) => {
   );
 
   const {mutateAsync} = useDeleteData(deleteKey);
+  const {mutateAsync: mutateAsync1} = usePostData('files');
+  const {mutateAsync: mutateAsync2} = usePutData(deleteKey);
+  // -----------------------------------------------------
+
   const [visible, setVisible] = useState(false);
   const [tableLoading, setTableLoading] = useState(false);
   const [imageSrc, setImageSrc] = useState('');
+  const [recData, setRecData] = useState({});
+  const [visibility, setVisibility] = useState(false);
 
   let columns = {};
 
@@ -36,7 +45,7 @@ const DynamicTable = ({routeForData, deleteKey}) => {
               dataIndex: e,
               key: 'img',
               ellipse: true,
-              width: 50,
+              width: 80,
               align: 'center',
               render: (text) => {
                 return (
@@ -83,7 +92,7 @@ const DynamicTable = ({routeForData, deleteKey}) => {
       })
       .filter((e) => e)
       .sort((a, b) => a.forSort - b.forSort);
-    if (deleteKey !== 'users') {
+    if (deleteKey !== 'users' && deleteKey !== 'admins') {
       columns.push({
         title: 'Actions',
         key: 'actions',
@@ -98,6 +107,11 @@ const DynamicTable = ({routeForData, deleteKey}) => {
                   style={{
                     padding: '4px',
                     cursor: 'pointer',
+                  }}
+                  onClick={() => {
+                    // console.log('recors', record);
+                    setRecData(record);
+                    setVisibility(true);
                   }}
                 />
                 <Popconfirm
@@ -181,7 +195,7 @@ const DynamicTable = ({routeForData, deleteKey}) => {
   return (
     <div>
       {isSuccess ? (
-        <Space size={'middle'} direction='vertical'>
+        <div>
           <Table
             bordered
             rowKey={(record) => {
@@ -197,7 +211,7 @@ const DynamicTable = ({routeForData, deleteKey}) => {
             pagination={false}
           />
           <PaginationForTable total={data?.data?.size || 100} />
-        </Space>
+        </div>
       ) : (
         'Loading'
       )}
@@ -219,6 +233,171 @@ const DynamicTable = ({routeForData, deleteKey}) => {
             setVisible(value);
           },
         }}
+      />
+      <ModalForm
+        type={'edit'}
+        visibility={[visibility, setVisibility]}
+        initialValue={generateEdit(deleteKey, recData)}
+        schema={generate(deleteKey)?.[1]}
+        onSubmit={async (data) => {
+          if (deleteKey === 'teachers') {
+            const hideFunc = message.loading({
+              content: 'Yangilanmoqda',
+              duration: 0,
+            });
+            const newData = {
+              id: recData.teacher_id,
+              ...data.create[0],
+            };
+            newData.about = JSON.stringify(newData.about);
+            if (data.imgUrl.length === 0) {
+              newData.imgUrl = recData.teacher_img;
+            } else {
+              const formData = new FormData();
+              formData.append('file', data.imgUrl[0]);
+
+              await mutateAsync1(formData)
+                .then((a) => {
+                  newData.imgUrl = a?.fileUrl;
+                })
+                .catch(() => {
+                  message.error("Rasm yuklanmadi qayta urinib ko'ring!");
+                });
+            }
+            mutateAsync2(newData)
+              .then((e) => {
+                message.success(e.message);
+                hideFunc();
+              })
+              .catch((err) => {
+                message.error(err.message);
+                hideFunc();
+              });
+          } else if (deleteKey === 'news') {
+            const hideFunc = message.loading({
+              content: 'Yangilanmoqda',
+              duration: 0,
+            });
+            const newData = {
+              id: recData.news_id,
+              ...data.create[0],
+            };
+            newData.data = JSON.stringify(newData.data);
+            if (data.imgUrl.length === 0) {
+              newData.imgUrl = recData.news_img;
+            } else {
+              const formData = new FormData();
+              formData.append('file', data.imgUrl[0]);
+
+              await mutateAsync1(formData)
+                .then((a) => {
+                  newData.imgUrl = a?.fileUrl;
+                })
+                .catch(() => {
+                  message.error("Rasm yuklanmadi qayta urinib ko'ring!");
+                });
+            }
+            mutateAsync2(newData)
+              .then((e) => {
+                message.success(e.message);
+                hideFunc();
+              })
+              .catch((err) => {
+                message.error(err.message);
+                hideFunc();
+              });
+          } else if (deleteKey === 'results') {
+            const hideFunc = message.loading({
+              content: 'Yangilanmoqda',
+              duration: 0,
+            });
+            await mutateAsync2({
+              id: recData.result_id,
+              ...data.create[0],
+            })
+              .then((res) => {
+                message.success(res.message);
+                hideFunc();
+              })
+              .catch(() => {
+                message.error('Xatolik mavjud');
+                hideFunc();
+              });
+          } else if (deleteKey === 'courses') {
+            console.log(data);
+            const hideFunc = message.loading({
+              content: 'Yangilanmoqda',
+              duration: 0,
+            });
+            const newData = {
+              id: recData.course_id,
+              ...data.create[0],
+            };
+            newData.data = JSON.stringify(newData.data);
+            if (data.imgUrl.length === 0) {
+              newData.imgUrl = recData.course_img;
+            } else {
+              const formData = new FormData();
+              formData.append('file', data.imgUrl[0]);
+
+              await mutateAsync1(formData)
+                .then((a) => {
+                  newData.imgUrl = a?.fileUrl;
+                })
+                .catch(() => {
+                  message.error("Rasm yuklanmadi qayta urinib ko'ring!");
+                });
+            }
+
+            newData.desc = JSON.stringify(newData.desc);
+
+            console.log(newData);
+            mutateAsync2(newData)
+              .then((e) => {
+                message.success(e.message);
+                hideFunc();
+              })
+              .catch((err) => {
+                message.error(err.message);
+                hideFunc();
+              });
+          } else if (deleteKey === 'comments') {
+            const hideFunc = message.loading({
+              content: 'Yangilanmoqda',
+              duration: 0,
+            });
+            const newData = {
+              id: recData.comment_id,
+              ...data.create[0],
+            };
+            newData.data = JSON.stringify(newData.data);
+            if (data.imgUrl.length === 0) {
+              newData.imgUrl = recData.news_img;
+            } else {
+              const formData = new FormData();
+              formData.append('file', data.imgUrl[0]);
+
+              await mutateAsync1(formData)
+                .then((a) => {
+                  newData.imgUrl = a?.fileUrl;
+                })
+                .catch(() => {
+                  message.error("Rasm yuklanmadi qayta urinib ko'ring!");
+                });
+            }
+
+            mutateAsync2(newData)
+              .then((e) => {
+                message.success(e.message);
+                hideFunc();
+              })
+              .catch((err) => {
+                message.error(err.message);
+                hideFunc();
+              });
+          }
+        }}
+        isLoading={false}
       />
     </div>
   );

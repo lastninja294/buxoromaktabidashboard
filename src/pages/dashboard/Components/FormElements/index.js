@@ -4,6 +4,7 @@ import FormPhone from './FormPhone';
 import FormSelect from './FormSelect';
 import FormUpload from './FormUpload';
 import PropTypes from 'prop-types';
+import FormSwitch from './FormSwitch';
 
 function FormElements({type, ...others}) {
   switch (type) {
@@ -17,6 +18,8 @@ function FormElements({type, ...others}) {
       return <FormUpload {...others} />;
     case 'select':
       return <FormSelect {...others} />;
+    case 'switch':
+      return <FormSwitch {...others} />;
     default:
       break;
   }

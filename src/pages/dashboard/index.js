@@ -18,12 +18,12 @@ export const dashboardPagesConfigs = [
     component: React.lazy(() => import('./courses')),
   },
   {
-    path: '/dashboard/components',
-    component: React.lazy(() => import('./Components/forRoute')),
-  },
-  {
     path: '/dashboard/registeredUsers',
     component: React.lazy(() => import('./registeredUsers')),
+  },
+  {
+    path: '/dashboard/comments',
+    component: React.lazy(() => import('./Comments')),
   },
   {
     path: '/dashboard/admins',
