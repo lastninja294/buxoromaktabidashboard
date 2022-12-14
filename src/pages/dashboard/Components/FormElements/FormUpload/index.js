@@ -40,7 +40,7 @@ function FormUpload({control, register, error, name, defaultValue, ...others}) {
                   name='imgUrl'
                   accept={'.png, .jpg, .jpeg'}
                   id='imageupload'
-                  style={{display: 'none'}}
+                  style={{opacity: 0, position: 'absolute', zIndex: '-1'}}
                   onChange={async (e) => {
                     const file = e.target.files[0];
                     const base64 = await convertBase64(file);

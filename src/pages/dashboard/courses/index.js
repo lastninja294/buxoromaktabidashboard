@@ -11,8 +11,8 @@ const Courses = () => {
   const {mutateAsync: mutateAsync1} = usePostData('courses');
 
   const handleSubmit = async (data, reset) => {
+    console.log(data.imgUrl);
     const newData = {...data.create[0]};
-    newData.desc = JSON.stringify(newData.desc);
     const imgUpload = new FormData();
     imgUpload.append('file', data.imgUrl[0]);
 

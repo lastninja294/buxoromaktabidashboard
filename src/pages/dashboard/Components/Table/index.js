@@ -36,7 +36,7 @@ const DynamicTable = ({routeForData, deleteKey}) => {
   let columns = {};
 
   if (isSuccess) {
-    columns = Object.keys(data?.data.data[0])
+    columns = Object.keys(data?.data.data?.[0] || [])
       .map((e) => {
         if (!(e.split('_').filter((element) => element === 'id').length > 0)) {
           if (e.split('_').filter((elem) => elem === 'img').length > 0) {
@@ -210,7 +210,7 @@ const DynamicTable = ({routeForData, deleteKey}) => {
             ellipse={true}
             pagination={false}
           />
-          <PaginationForTable total={data?.data?.size || 100} />
+          <PaginationForTable total={data?.data?.size || 10} />
         </div>
       ) : (
         'Loading'

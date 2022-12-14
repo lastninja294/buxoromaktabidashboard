@@ -24,8 +24,6 @@ const Teachers = () => {
         message.error("Rasm yuklanmadi qayta urinib ko'ring!");
       });
 
-    console.log(newData);
-
     await mutateAsync1(newData)
       .then(() => {
         message.success("Ma'lumot qo'shildi");
