@@ -4,14 +4,8 @@ function generateEdit(page, obj) {
   if (page === 'teachers') {
     const initialEditValue = {};
     Object.keys(obj).forEach((e) => {
-      console.log(e);
       const key = e.split('_')[1];
-      if (key === 'about') {
-        initialEditValue[key] = {
-          Uz: draftToHtml(JSON.parse(obj[e]).Uz),
-          Ru: draftToHtml(JSON.parse(obj[e]).Ru),
-        };
-      } else if (key !== 'id') {
+      if (key !== 'id') {
         initialEditValue[key === 'img' ? 'imgUrl' : key] = obj[e];
       }
     });
@@ -41,15 +35,8 @@ function generateEdit(page, obj) {
     const initialEditValue = {};
     Object.keys(obj).forEach((e) => {
       const key = e.split('_')[1];
-      if (e.split('_')[0] === 'course') {
-        if (key === 'desc') {
-          initialEditValue[key] = {
-            Uz: draftToHtml(JSON.parse(obj[e]).Uz),
-            Ru: draftToHtml(JSON.parse(obj[e]).Ru),
-          };
-        } else if (key !== 'id' && key !== 'like') {
-          initialEditValue[key === 'img' ? 'imgUrl' : key] = obj[e];
-        }
+      if (e.split('_')[0] === 'course' && key !== 'id' && key !== 'like') {
+        initialEditValue[key === 'img' ? 'imgUrl' : key] = obj[e];
       }
     });
     initialEditValue.teacherId = obj.teacher_id;

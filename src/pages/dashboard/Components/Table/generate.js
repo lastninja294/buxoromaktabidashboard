@@ -8,10 +8,7 @@ function generateInitialValue(pageName) {
         surname: '',
         experince: '',
         subjects: '',
-        about: {
-          Uz: '',
-          Ru: '',
-        },
+        about: '',
         imgUrl: [],
       },
       yup.object().shape({
@@ -19,12 +16,9 @@ function generateInitialValue(pageName) {
           yup.object().shape({
             name: yup.string().required("*Maydon to'ldirilishi kerak"),
             surname: yup.string().required("*Maydon to'ldirilishi kerak"),
-            experince: yup.string().required("*Maydon to'ldirilishi kerak"),
+            experince: yup.number().required("*Maydon to'ldirilishi kerak"),
             subjects: yup.string().required("*Maydon to'ldirilishi kerak"),
-            about: yup.object().shape({
-              Uz: yup.object(),
-              Ru: yup.object(),
-            }),
+            about: yup.string().required("*Maydon to'ldirilishi kerak"),
             imgUrl: yup.array().nullable(),
           }),
         ),
@@ -33,11 +27,13 @@ function generateInitialValue(pageName) {
   } else if (pageName === 'news') {
     return [
       {
-        imgUrl: [],
+        title: '',
+        desc: '',
         data: {
           Uz: '',
           Ru: '',
         },
+        imgUrl: [],
       },
       yup.object().shape({
         create: yup.array().of(
@@ -47,6 +43,8 @@ function generateInitialValue(pageName) {
               Uz: yup.object(),
               Ru: yup.object(),
             }),
+            title: yup.string().required("*Maydon to'ldirilishi kerak"),
+            desc: yup.string().required("*Maydon to'ldirilishi kerak"),
           }),
         ),
       }),
@@ -56,10 +54,7 @@ function generateInitialValue(pageName) {
       {
         name: '',
         price: '',
-        desc: {
-          Uz: '',
-          Ru: '',
-        },
+        desc: '',
         imgUrl: [],
         teacherId: 'select',
       },
@@ -70,10 +65,7 @@ function generateInitialValue(pageName) {
             price: yup
               .number()
               .required("*Maydon sonlar bilan to'ldirilishi kerak"),
-            desc: yup.object().shape({
-              Uz: yup.object(),
-              Ru: yup.object(),
-            }),
+            desc: yup.string().required("*Maydon to'ldirilishi kerak"),
             imgUrl: yup.array().nullable(),
             teacherId: yup.string().required("*Maydon to'ldirilishi kerak"),
           }),

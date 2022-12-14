@@ -24,7 +24,9 @@ export const usePostData = (key) => {
     },
     {
       onError: (_error, _hero, context) => {
-        openNotificationWithIcon('error');
+        if (key !== 'login') {
+          openNotificationWithIcon('error');
+        }
         queryClient.setQueryData(key, context.previousData);
       },
       onSettled: () => {

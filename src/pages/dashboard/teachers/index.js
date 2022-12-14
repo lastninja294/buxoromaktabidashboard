@@ -12,8 +12,6 @@ const Teachers = () => {
 
   const handleSubmit = async (data, reset) => {
     const newData = {...data.create[0]};
-    newData.about = JSON.stringify(newData.about);
-    console.log(newData);
     const imgUpload = new FormData();
     imgUpload.append('file', data.imgUrl[0]);
 
@@ -25,6 +23,8 @@ const Teachers = () => {
         newData.imgUrl = '';
         message.error("Rasm yuklanmadi qayta urinib ko'ring!");
       });
+
+    console.log(newData);
 
     await mutateAsync1(newData)
       .then(() => {

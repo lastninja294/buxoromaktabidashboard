@@ -202,7 +202,7 @@ const DynamicTable = ({routeForData, deleteKey}) => {
               return record[Object.keys(record)[0]];
             }}
             columns={columns}
-            dataSource={data?.data?.data}
+            dataSource={data?.data?.data || []}
             loading={tableLoading}
             scroll={{
               y: 400,

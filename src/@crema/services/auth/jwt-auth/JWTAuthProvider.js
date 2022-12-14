@@ -94,13 +94,16 @@ const JWTAuthAuthProvider = ({children}) => {
         setJWTAuthData({user: e.data, isAuthenticated: true, isLoading: false});
         dispatch({type: FETCH_SUCCESS});
       })
-      .catch((err) => {
+      .catch(() => {
         setJWTAuthData({
           ...firebaseData,
           isAuthenticated: false,
           isLoading: false,
         });
-        dispatch({type: FETCH_ERROR, payload: err.message});
+        dispatch({
+          type: FETCH_ERROR,
+          payload: "Parol yoki login xato bo'lishi mumkin",
+        });
       });
   };
 

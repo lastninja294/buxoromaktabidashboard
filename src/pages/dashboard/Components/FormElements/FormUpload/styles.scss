@@ -1,17 +1,38 @@
 .create-upload {
   max-width: 100%;
   text-overflow: ellipsis;
-  .ant-upload-list {
-    display: flex !important;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: center;
+  position: relative;
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    z-index: 1;
+    border-radius: 4px;
+    object-fit: cover;
   }
-  .ant-upload-list-item {
-    margin-right: 10px;
+  label {
+    position: relative;
+    z-index: 2;
   }
-  .ant-upload-list-item-name {
-    max-width: 200px;
-    text-overflow: ellipsis;
+}
+
+.labelForUpload {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px 9px;
+  max-width: 100px;
+  min-height: 100px;
+  cursor: pointer;
+  border-radius: 6px;
+  background-color: rgba(0, 0, 0, 0.02);
+  border: 1px dashed #d9d9d9;
+  transition: border-color 0.3s;
+  &:hover {
+    border: 1px dashed #1677ff;
   }
 }

@@ -25,6 +25,8 @@ const News = () => {
     const uploadData = {
       imgUrl: url,
       data: JSON.stringify(data.create[0].data),
+      title: data.create[0].title,
+      desc: data.create[0].desc,
     };
 
     await mutateAsync1(uploadData)
