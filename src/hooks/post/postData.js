@@ -17,7 +17,7 @@ export const usePostData = (key) => {
           Authorization: 'BMToken ' + localStorage.getItem('token'),
         },
         method: 'post',
-        url: `https://buxoromaktabi.uz/api/${key}`,
+        url: `https://api.buxoromaktabi.uz/api/${key}`,
         data: dataPOST,
       });
       return res.data;

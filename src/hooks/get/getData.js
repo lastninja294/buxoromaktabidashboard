@@ -12,7 +12,7 @@ export const useGetData = (key) => {
   return useQuery(
     key,
     async () => {
-      return axios.get(`https://buxoromaktabi.uz/api/${key}`, {
+      return axios.get(`https://api.buxoromaktabi.uz/api/${key}`, {
         headers: {
           Authorization: 'BMToken ' + localStorage.getItem('token'),
         },

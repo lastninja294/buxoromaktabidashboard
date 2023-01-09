@@ -11,7 +11,7 @@ export const useDeleteData = (key) => {
           Authorization: 'BMToken ' + localStorage.getItem('token'),
         },
         method: 'delete',
-        url: `https://buxoromaktabi.uz/api/${key}`,
+        url: `https://api.buxoromaktabi.uz/api/${key}`,
         data: dataDELETE,
       }),
     {
