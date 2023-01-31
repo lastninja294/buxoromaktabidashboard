@@ -5,11 +5,11 @@
     "static/css/2.76b253d2.chunk.css": "/static/css/2.76b253d2.chunk.css",
     "static/js/2.b9c7e0e2.chunk.js": "/static/js/2.b9c7e0e2.chunk.js",
     "static/css/3.44c649c0.chunk.css": "/static/css/3.44c649c0.chunk.css",
-    "static/js/3.8a0acbae.chunk.js": "/static/js/3.8a0acbae.chunk.js",
+    "static/js/3.de99ad57.chunk.js": "/static/js/3.de99ad57.chunk.js",
     "static/js/4.bcb1bdc3.chunk.js": "/static/js/4.bcb1bdc3.chunk.js",
     "main.css": "/static/css/main.169cbd41.chunk.css",
     "main.js": "/static/js/main.bf74698a.chunk.js",
-    "runtime-main.js": "/static/js/runtime-main.bc081325.js",
+    "runtime-main.js": "/static/js/runtime-main.a047bf16.js",
     "static/css/7.f5bcd5e0.chunk.css": "/static/css/7.f5bcd5e0.chunk.css",
     "static/js/7.bd30c583.chunk.js": "/static/js/7.bd30c583.chunk.js",
     "static/css/8.d38d6d49.chunk.css": "/static/css/8.d38d6d49.chunk.css",
@@ -42,7 +42,7 @@
     "static/media/index.css": "/static/media/sprite-flags-24x24.6bd080ea.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.bc081325.js",
+    "static/js/runtime-main.a047bf16.js",
     "static/css/7.f5bcd5e0.chunk.css",
     "static/js/7.bd30c583.chunk.js",
     "static/css/main.169cbd41.chunk.css",

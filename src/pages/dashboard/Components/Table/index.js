@@ -38,7 +38,14 @@ const DynamicTable = ({routeForData, deleteKey}) => {
   if (isSuccess) {
     columns = Object.keys(data?.data.data?.[0] || [])
       .map((e) => {
-        if (!(e.split('_').filter((element) => element === 'id').length > 0)) {
+        if (
+          !(
+            e
+              .split('_')
+              .filter((element) => element === 'id' || element === 'like')
+              .length > 0
+          )
+        ) {
           if (e.split('_').filter((elem) => elem === 'img').length > 0) {
             return {
               title: 'Img',
@@ -312,7 +319,7 @@ const DynamicTable = ({routeForData, deleteKey}) => {
               ...data.create[0],
             };
             newData.data = JSON.stringify(newData.data);
-            newData.title = JSON.stringify(newData.data);
+            newData.title = JSON.stringify(newData.title);
             newData.desc = JSON.stringify(newData.desc);
             if (data.imgUrl.length === 0) {
               newData.imgUrl = recData.news_img;
@@ -328,13 +335,14 @@ const DynamicTable = ({routeForData, deleteKey}) => {
                   message.error("Rasm yuklanmadi qayta urinib ko'ring!");
                 });
             }
+
+            console.log('newData', newData);
             mutateAsync2(newData)
               .then((e) => {
                 message.success(e.message);
                 hideFunc();
               })
-              .catch((err) => {
-                message.error(err.message);
+              .catch(() => {
                 hideFunc();
               });
           } else if (deleteKey === 'results') {

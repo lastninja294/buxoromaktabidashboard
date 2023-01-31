@@ -97,12 +97,13 @@ function generateInitialValue(pageName) {
             name: yup.string().required("*Maydon to'ldirilishi kerak"),
             price: yup
               .number()
-              .required("*Maydon sonlar bilan to'ldirilishi kerak"),
+              .typeError('*Ushbu maydon faqat butun son qabul qiladi')
+              .required("*Maydon to'ldirilishi kerak"),
             desc: yup
               .object()
               .shape({
-                Uz: yup.string(),
-                Ru: yup.string(),
+                Uz: yup.string().required("*Maydon to'ldirilishi kerak"),
+                Ru: yup.string().required("*Maydon to'ldirilishi kerak"),
               })
               .required("*Maydon to'ldirilishi kerak"),
             imgUrl: yup.array().nullable(),
