@@ -11,7 +11,10 @@ const Courses = () => {
   const {mutateAsync: mutateAsync1} = usePostData('courses');
 
   const handleSubmit = async (data, reset) => {
-    console.log(data.imgUrl);
+    const hideFunc = message.loading({
+      content: 'Yangilanmoqda',
+      duration: 0,
+    });
     const newData = {...data.create[0]};
     const imgUpload = new FormData();
     imgUpload.append('file', data.imgUrl[0]);
@@ -25,14 +28,17 @@ const Courses = () => {
         message.error("Rasm yuklanmadi qayta urinib ko'ring!");
       });
 
-    console.log('newwwww', newData);
+    newData.desc = JSON.stringify(newData.desc);
 
     await mutateAsync1(newData)
       .then((res) => {
         message.success(res.message);
         reset();
+        hideFunc();
       })
-      .catch((err) => console.log(err));
+      .catch(() => {
+        hideFunc();
+      });
   };
 
   return (

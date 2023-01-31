@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {useMutation, useQueryClient} from 'react-query';
 import {notification} from 'antd';
+import {useHistory} from 'react-router-dom';
 
 const openNotificationWithIcon = (type) => {
   notification[type]({
@@ -10,6 +11,7 @@ const openNotificationWithIcon = (type) => {
 };
 export const usePutData = (key) => {
   const queryClient = useQueryClient();
+  const history = useHistory();
   return useMutation(
     async (dataPUT) => {
       const res = await axios({
@@ -32,7 +34,9 @@ export const usePutData = (key) => {
       },
 
       onSettled: () => {
-        queryClient.invalidateQueries([key]);
+        queryClient.invalidateQueries([
+          key + '/' + history.location.search.slice(1),
+        ]);
       },
     },
   );

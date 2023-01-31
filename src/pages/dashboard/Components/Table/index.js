@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useGetData, useDeleteData, usePostData, usePutData} from 'hooks';
-import {Table, Image, Tag, message, Space, Popconfirm} from 'antd';
+import {Table, Image, Tag, message, Space, Popconfirm, Switch} from 'antd';
 import {BsImage} from 'react-icons/bs';
 import {AiOutlineDelete, AiOutlineEdit} from 'react-icons/ai';
 import PaginationForTable from '../Pagination';
@@ -14,7 +14,7 @@ import generate from './generate';
 const DynamicTable = ({routeForData, deleteKey}) => {
   const history = useHistory();
 
-  const {data, isSuccess, refetch} = useGetData(
+  const {data, isSuccess} = useGetData(
     `${routeForData}/${
       history.location.search.split('?')[1]
         ? history.location.search.split('?')[1]
@@ -73,10 +73,18 @@ const DynamicTable = ({routeForData, deleteKey}) => {
               forSort: 0,
               width: 150,
               render: (text) => {
-                if (text) {
-                  return <Tag color='green'>{text.toString()}</Tag>;
+                if (text.toString() === 'true') {
+                  return (
+                    <Tag color='green'>
+                      {deleteKey === 'results' ? 'Grand' : 'Active'}
+                    </Tag>
+                  );
                 }
-                return <Tag color='red'>{text.toString()}</Tag>;
+                return (
+                  <Tag color='red'>
+                    {deleteKey === 'results' ? 'Kontrakt' : 'Non-Active'}
+                  </Tag>
+                );
               },
             };
           }
@@ -109,7 +117,6 @@ const DynamicTable = ({routeForData, deleteKey}) => {
                     cursor: 'pointer',
                   }}
                   onClick={() => {
-                    // console.log('recors', record);
                     setRecData(record);
                     setVisibility(true);
                   }}
@@ -127,7 +134,6 @@ const DynamicTable = ({routeForData, deleteKey}) => {
                     }).then(() => {
                       message.success("Muvaffaqiyatli o'chirildi");
                       setTableLoading(false);
-                      refetch();
                     });
                   }}
                   okText='Xa'
@@ -150,13 +156,35 @@ const DynamicTable = ({routeForData, deleteKey}) => {
       columns.push({
         title: 'Actions',
         key: 'actions',
-        width: 30,
+        width: 80,
         fixed: 'right',
         align: 'center',
         render: (record) => {
           return (
             <>
               <Space size={'middle'} direction='horizontal' align='center'>
+                <Switch
+                  checked={record.user_status}
+                  onChange={async () => {
+                    const hideFunc = message.loading({
+                      content: 'Yangilanmoqda',
+                      duration: 0,
+                    });
+                    await mutateAsync2({
+                      id: record.user_id,
+                      fullname: record.user_fullname,
+                      phone: record.user_phone,
+                      status: !record.user_status,
+                    })
+                      .then(() => {
+                        message.success('Yangilandi');
+                        hideFunc();
+                      })
+                      .catch(() => {
+                        hideFunc();
+                      });
+                  }}
+                />
                 <Popconfirm
                   title={`Haqiqatdan ham o'chirishni xohlaysizmi?`}
                   onConfirm={async () => {
@@ -170,7 +198,6 @@ const DynamicTable = ({routeForData, deleteKey}) => {
                     }).then(() => {
                       message.success("Muvaffaqiyatli o'chirildi");
                       setTableLoading(false);
-                      refetch();
                     });
                   }}
                   okText='Xa'
@@ -249,7 +276,6 @@ const DynamicTable = ({routeForData, deleteKey}) => {
               id: recData.teacher_id,
               ...data.create[0],
             };
-            newData.about = JSON.stringify(newData.about);
             if (data.imgUrl.length === 0) {
               newData.imgUrl = recData.teacher_img;
             } else {
@@ -264,6 +290,9 @@ const DynamicTable = ({routeForData, deleteKey}) => {
                   message.error("Rasm yuklanmadi qayta urinib ko'ring!");
                 });
             }
+
+            newData.about = JSON.stringify(newData.about);
+
             mutateAsync2(newData)
               .then((e) => {
                 message.success(e.message);
@@ -283,6 +312,8 @@ const DynamicTable = ({routeForData, deleteKey}) => {
               ...data.create[0],
             };
             newData.data = JSON.stringify(newData.data);
+            newData.title = JSON.stringify(newData.data);
+            newData.desc = JSON.stringify(newData.desc);
             if (data.imgUrl.length === 0) {
               newData.imgUrl = recData.news_img;
             } else {
@@ -324,7 +355,6 @@ const DynamicTable = ({routeForData, deleteKey}) => {
                 hideFunc();
               });
           } else if (deleteKey === 'courses') {
-            console.log(data);
             const hideFunc = message.loading({
               content: 'Yangilanmoqda',
               duration: 0,
@@ -333,7 +363,6 @@ const DynamicTable = ({routeForData, deleteKey}) => {
               id: recData.course_id,
               ...data.create[0],
             };
-            newData.data = JSON.stringify(newData.data);
             if (data.imgUrl.length === 0) {
               newData.imgUrl = recData.course_img;
             } else {
@@ -351,7 +380,6 @@ const DynamicTable = ({routeForData, deleteKey}) => {
 
             newData.desc = JSON.stringify(newData.desc);
 
-            console.log(newData);
             mutateAsync2(newData)
               .then((e) => {
                 message.success(e.message);

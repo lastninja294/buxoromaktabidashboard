@@ -1,9 +1,11 @@
 import {message} from 'antd';
 import axios from 'axios';
 import {useMutation, useQueryClient} from 'react-query';
+import {useHistory} from 'react-router-dom';
 
 export const useDeleteData = (key) => {
   const queryClient = useQueryClient();
+  const history = useHistory();
   return useMutation(
     (dataDELETE) =>
       axios({
@@ -20,7 +22,9 @@ export const useDeleteData = (key) => {
       },
 
       onSettled: () => {
-        queryClient.invalidateQueries([key]);
+        queryClient.invalidateQueries([
+          key + '/' + history.location.search.slice(1),
+        ]);
       },
     },
   );

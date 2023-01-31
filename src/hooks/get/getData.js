@@ -10,14 +10,17 @@ const openNotificationWithIcon = (type) => {
 };
 export const useGetData = (key) => {
   return useQuery(
-    key,
-    async () => {
-      return axios.get(`https://api.buxoromaktabi.uz/api/${key}`, {
-        headers: {
-          Authorization: 'BMToken ' + localStorage.getItem('token'),
-        },
-      });
+    {
+      queryKey: [key],
+      queryFn: async () => {
+        return axios.get(`https://api.buxoromaktabi.uz/api/${key}`, {
+          headers: {
+            Authorization: 'BMToken ' + localStorage.getItem('token'),
+          },
+        });
+      },
     },
+
     {
       onError: () => {
         openNotificationWithIcon('error');

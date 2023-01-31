@@ -8,7 +8,10 @@ function generateInitialValue(pageName) {
         surname: '',
         experince: '',
         subjects: '',
-        about: '',
+        about: {
+          Uz: '',
+          Ru: '',
+        },
         imgUrl: [],
       },
       yup.object().shape({
@@ -18,7 +21,13 @@ function generateInitialValue(pageName) {
             surname: yup.string().required("*Maydon to'ldirilishi kerak"),
             experince: yup.number().required("*Maydon to'ldirilishi kerak"),
             subjects: yup.string().required("*Maydon to'ldirilishi kerak"),
-            about: yup.string().required("*Maydon to'ldirilishi kerak"),
+            about: yup
+              .object()
+              .shape({
+                Uz: yup.string(),
+                Ru: yup.string(),
+              })
+              .required("*Maydon to'ldirilishi kerak"),
             imgUrl: yup.array().nullable(),
           }),
         ),
@@ -27,8 +36,14 @@ function generateInitialValue(pageName) {
   } else if (pageName === 'news') {
     return [
       {
-        title: '',
-        desc: '',
+        title: {
+          Uz: '',
+          Ru: '',
+        },
+        desc: {
+          Uz: '',
+          Ru: '',
+        },
         data: {
           Uz: '',
           Ru: '',
@@ -39,12 +54,27 @@ function generateInitialValue(pageName) {
         create: yup.array().of(
           yup.object().shape({
             imgUrl: yup.array().nullable(),
-            data: yup.object().shape({
-              Uz: yup.object(),
-              Ru: yup.object(),
-            }),
-            title: yup.string().required("*Maydon to'ldirilishi kerak"),
-            desc: yup.string().required("*Maydon to'ldirilishi kerak"),
+            data: yup
+              .object()
+              .shape({
+                Uz: yup.object(),
+                Ru: yup.object(),
+              })
+              .required("*Maydon to'ldirilishi kerak"),
+            title: yup
+              .object()
+              .shape({
+                Uz: yup.string(),
+                Ru: yup.string(),
+              })
+              .required("*Maydon to'ldirilishi kerak"),
+            desc: yup
+              .object()
+              .shape({
+                Uz: yup.string(),
+                Ru: yup.string(),
+              })
+              .required("*Maydon to'ldirilishi kerak"),
           }),
         ),
       }),
@@ -54,7 +84,10 @@ function generateInitialValue(pageName) {
       {
         name: '',
         price: '',
-        desc: '',
+        desc: {
+          Uz: '',
+          Ru: '',
+        },
         imgUrl: [],
         teacherId: 'select',
       },
@@ -65,7 +98,13 @@ function generateInitialValue(pageName) {
             price: yup
               .number()
               .required("*Maydon sonlar bilan to'ldirilishi kerak"),
-            desc: yup.string().required("*Maydon to'ldirilishi kerak"),
+            desc: yup
+              .object()
+              .shape({
+                Uz: yup.string(),
+                Ru: yup.string(),
+              })
+              .required("*Maydon to'ldirilishi kerak"),
             imgUrl: yup.array().nullable(),
             teacherId: yup.string().required("*Maydon to'ldirilishi kerak"),
           }),

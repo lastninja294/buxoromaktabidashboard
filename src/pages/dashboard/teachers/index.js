@@ -24,6 +24,8 @@ const Teachers = () => {
         message.error("Rasm yuklanmadi qayta urinib ko'ring!");
       });
 
+    newData.about = JSON.stringify(newData.about);
+
     await mutateAsync1(newData)
       .then(() => {
         message.success("Ma'lumot qo'shildi");

@@ -16,6 +16,7 @@ function GenerateModalForm({
   onSubmit,
   isLoading,
 }) {
+
   const refFrom = useRef();
   const {
     register,

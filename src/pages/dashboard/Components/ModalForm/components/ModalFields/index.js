@@ -23,7 +23,10 @@ const FormFields = ({
       ) {
         isMultiLanguage = true;
         let pushValue = {
-          type: 'editor',
+          type:
+            key === 'title' || key === 'desc' || key === 'about'
+              ? 'input'
+              : 'editor',
           nameValue: key,
         };
         isMultiValues.push(pushValue);

@@ -11,6 +11,10 @@ const News = () => {
   const {mutateAsync: mutateAsync1} = usePostData('news');
 
   const handleSubmit = async (data, reset) => {
+    const hideFunc = message.loading({
+      content: 'Yangilanmoqda',
+      duration: 0,
+    });
     const imgUpload = new FormData();
     imgUpload.append('file', data.imgUrl[0]);
 
@@ -25,16 +29,19 @@ const News = () => {
     const uploadData = {
       imgUrl: url,
       data: JSON.stringify(data.create[0].data),
-      title: data.create[0].title,
-      desc: data.create[0].desc,
+      title: JSON.stringify(data.create[0].title),
+      desc: JSON.stringify(data.create[0].desc),
     };
 
     await mutateAsync1(uploadData)
       .then((res) => {
         message.success(res.message);
         reset();
+        hideFunc();
       })
-      .catch(() => message.error('Xatolik mavjud'));
+      .catch(() => {
+        hideFunc();
+      });
   };
 
   return (
