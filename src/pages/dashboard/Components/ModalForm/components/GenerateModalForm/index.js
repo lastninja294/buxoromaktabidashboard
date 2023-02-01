@@ -16,7 +16,6 @@ function GenerateModalForm({
   onSubmit,
   isLoading,
 }) {
-
   const refFrom = useRef();
   const {
     register,
@@ -25,6 +24,7 @@ function GenerateModalForm({
     reset,
     formState: {errors},
   } = useForm({
+    defaultValues: initialValue,
     resolver: yupResolver(schema),
   });
 
@@ -37,6 +37,7 @@ function GenerateModalForm({
     refFrom.current?.click();
   };
   const handleCancel = () => {
+    reset();
     onCancel();
   };
   useEffect(() => {

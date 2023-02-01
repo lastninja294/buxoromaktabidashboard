@@ -19,15 +19,15 @@ function generateInitialValue(pageName) {
           yup.object().shape({
             name: yup.string().required("*Maydon to'ldirilishi kerak"),
             surname: yup.string().required("*Maydon to'ldirilishi kerak"),
-            experince: yup.number().required("*Maydon to'ldirilishi kerak"),
-            subjects: yup.string().required("*Maydon to'ldirilishi kerak"),
-            about: yup
-              .object()
-              .shape({
-                Uz: yup.string(),
-                Ru: yup.string(),
-              })
+            experince: yup
+              .number()
+              .typeError('*Ushbu maydonga faqat butun son kiritish mumkin')
               .required("*Maydon to'ldirilishi kerak"),
+            subjects: yup.string().required("*Maydon to'ldirilishi kerak"),
+            about: yup.object().shape({
+              Uz: yup.string().required("*Maydon to'ldirilishi kerak"),
+              Ru: yup.string().required("*Maydon to'ldirilishi kerak"),
+            }),
             imgUrl: yup.array().nullable(),
           }),
         ),
@@ -134,7 +134,7 @@ function generateInitialValue(pageName) {
         year: '',
         university: '',
         points: '',
-        status: '',
+        status: false,
       },
       yup.object().shape({
         create: yup.array().of(
@@ -142,7 +142,7 @@ function generateInitialValue(pageName) {
             fullname: yup.string().required("*Maydon to'ldirilishi kerak"),
             year: yup.number().required("*Maydon to'ldirilishi kerak"),
             university: yup.string().required("Maydon to'ldirilishi shart"),
-            status: yup.string().required("Maydon to'ldirilishi shart"),
+            status: yup.boolean().required("Maydon to'ldirilishi shart"),
             points: yup.number().required("*Maydon to'ldirilishi kerak"),
           }),
         ),

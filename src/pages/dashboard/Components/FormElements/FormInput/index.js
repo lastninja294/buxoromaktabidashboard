@@ -7,7 +7,7 @@ function FormInput({
   placeholder,
   error,
   name,
-  defaultValue,
+  // defaultValue,
   label = 'title',
   ...others
 }) {
@@ -16,7 +16,6 @@ function FormInput({
       <Controller
         control={control}
         name={name}
-        defaultValue={defaultValue}
         render={({field}) => (
           <>
             <label
@@ -26,11 +25,7 @@ function FormInput({
                 margin: '10px 0',
               }}>
               <span>{label}</span>
-              <Input
-                {...field}
-                placeholder={placeholder}
-                defaultValue={defaultValue}
-              />
+              <Input {...field} placeholder={placeholder} />
               {error && (
                 <p style={{fontSize: '12px', color: 'red'}}>{error?.message}</p>
               )}

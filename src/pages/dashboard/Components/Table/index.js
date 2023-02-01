@@ -170,28 +170,30 @@ const DynamicTable = ({routeForData, deleteKey}) => {
           return (
             <>
               <Space size={'middle'} direction='horizontal' align='center'>
-                <Switch
-                  checked={record.user_status}
-                  onChange={async () => {
-                    const hideFunc = message.loading({
-                      content: 'Yangilanmoqda',
-                      duration: 0,
-                    });
-                    await mutateAsync2({
-                      id: record.user_id,
-                      fullname: record.user_fullname,
-                      phone: record.user_phone,
-                      status: !record.user_status,
-                    })
-                      .then(() => {
-                        message.success('Yangilandi');
-                        hideFunc();
-                      })
-                      .catch(() => {
-                        hideFunc();
+                {deleteKey === 'users' ? (
+                  <Switch
+                    checked={record.user_status}
+                    onChange={async () => {
+                      const hideFunc = message.loading({
+                        content: 'Yangilanmoqda',
+                        duration: 0,
                       });
-                  }}
-                />
+                      await mutateAsync2({
+                        id: record.user_id,
+                        fullname: record.user_fullname,
+                        phone: record.user_phone,
+                        status: !record.user_status,
+                      })
+                        .then(() => {
+                          message.success('Yangilandi');
+                          hideFunc();
+                        })
+                        .catch(() => {
+                          hideFunc();
+                        });
+                    }}
+                  />
+                ) : null}
                 <Popconfirm
                   title={`Haqiqatdan ham o'chirishni xohlaysizmi?`}
                   onConfirm={async () => {
@@ -336,7 +338,6 @@ const DynamicTable = ({routeForData, deleteKey}) => {
                 });
             }
 
-            console.log('newData', newData);
             mutateAsync2(newData)
               .then((e) => {
                 message.success(e.message);
@@ -350,10 +351,12 @@ const DynamicTable = ({routeForData, deleteKey}) => {
               content: 'Yangilanmoqda',
               duration: 0,
             });
-            await mutateAsync2({
+            const newData = {
               id: recData.result_id,
               ...data.create[0],
-            })
+            };
+            newData.status = newData.status.toString();
+            await mutateAsync2(newData)
               .then((res) => {
                 message.success(res.message);
                 hideFunc();

@@ -26,7 +26,6 @@ const Comments = () => {
       desc: data.create[0].desc,
       name: data.create[0].name,
     };
-    console.log(uploadData);
     await mutateAsync1(uploadData)
       .then((res) => {
         message.success(res.message);

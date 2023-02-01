@@ -2,13 +2,9 @@ import React, {useState} from 'react';
 import {PaginationForTable} from './index';
 import * as yup from 'yup';
 import AppPageMetadata from '@crema/core/AppPageMetadata';
-// import {useForm} from 'react-hook-form';
 import ModalForm from './ModalForm';
-// import FormElements from './FormElements';
-// import RichTextEditor from './FormElements/RichTextEditor';
-// import FormElements from './FormElements';
+
 import {DynamicTable} from './index';
-// import draftToHtml from 'draftjs-to-html';
 
 import {useForm} from 'react-hook-form';
 import RichTextEditor from './FormElements/RichTextEditor';
@@ -144,7 +140,6 @@ function Components() {
         console.log(res);
       })
       .catch((err) => console.log(err));
-    console.log(uploadData);
   };
 
   const {control, handleSubmit} = useForm({});

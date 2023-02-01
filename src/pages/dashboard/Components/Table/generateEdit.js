@@ -41,6 +41,9 @@ function generateEdit(page, obj) {
     Object.keys(obj).forEach((e) => {
       const key = e.split('_')[1];
       key !== 'id' ? (initialEditValue[key] = obj[e]) : null;
+      key === 'status'
+        ? (initialEditValue[key] = obj[e] === 'false' ? false : true)
+        : null;
     });
     return initialEditValue;
   } else if (page === 'courses') {

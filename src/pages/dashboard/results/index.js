@@ -9,6 +9,7 @@ import {usePostData} from 'hooks';
 const Results = () => {
   const {mutateAsync} = usePostData('results');
   const handleSubmit = async (data, reset) => {
+    data.create[0].status = data.create[0].status.toString();
     await mutateAsync(data.create[0])
       .then((res) => {
         message.success(res.message);
